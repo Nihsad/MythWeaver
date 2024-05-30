@@ -1,6 +1,7 @@
 const { Schema } = require('mongoose');
 
 const choiceSchema = new Schema(
+        // Choice doesn't become a model, but it since it is made as an array of subdocuments in the Story model, mongoose will still automatically generate an _id for each choice. 
     {
         choiceText: {
             type: String,
@@ -11,11 +12,11 @@ const choiceSchema = new Schema(
             type: Schema.Types.ObjectId,
             ref: 'Step',
         },
-        // votes is not a required field since it's N/A for the first story type
         votes: {
             type: Number, 
-        }
-    }
+            default: 0,
+        },
+    },
 );
 
 module.exports = choiceSchema;
