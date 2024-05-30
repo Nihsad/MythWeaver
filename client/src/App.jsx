@@ -6,7 +6,8 @@ import {
     createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-import { Outlet } from 'react-router-dom';
+// import { Outlet } from 'react-router-dom';
+import TreeComponent from './components/Tree/TreeComponent';
 
 const httpLink = createHttpLink({
     uri: '/graphql',
@@ -32,10 +33,12 @@ const client = new ApolloClient({
 
 function App() {
     return (
-        <ApolloProvider client={client}>
-            <Outlet />
-        </ApolloProvider>
+        <div>
+            <h1>This is the App Component</h1>
+            <TreeComponent /> {/* Ensure TreeComponent is rendered */}
+        </div>
     );
 }
 
 export default App;
+
