@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const stepSchema = require('./Step');
 const reviewSchema = require('./Review');
+const paymentInfoSchema = require('./PaymentInfo');
 
 const storySchema = new Schema(
     {
@@ -11,19 +12,24 @@ const storySchema = new Schema(
         author: {
             type: Schema.Types.ObjectId,
             ref: 'User',
+            required: true,
         },
         description: {
             type: String,
+            required: true,
         },
         imageUrl: {
             type: String,
         },
-        // I'm thinking that the possible values for storyStyle could be called soloAdventure (web style, story is prewritten with options that define outcomes), coWritten (story is written as votes are cast, with the author providing the choices), and readerDriven (story is written as votes are cast, with the readers providing the choices)
+        // I'm thinking that the possible values for storyStyle could be called Solo Adventure (web style, story is prewritten with options that define outcomes), Co-written (story is written as votes are cast, with the author providing the choices), and Reader Driven (story is written as votes are cast, with the readers providing the choices)
         storyStyle: {
             type: String, 
+            enum: ['Solo Adventure', 'Co-written', 'Reader Driven'],
+            required: true,
         },
         genre: {
-            type: String,
+            type: [String],
+            required: true,
         },
         tags: [String],
         // 1 = PG, 10 = Rated R or NC-17, something along those lines
@@ -31,17 +37,21 @@ const storySchema = new Schema(
             type: Number,
             min: 1,
             max: 10,
+            required: true,
         },
         publishedDate: {
             type: Date,
             default: Date.now,
+            required: true,
         },
         lastUpdatedDate: {
             type: Date,
             default: Date.now,
+            required: true,
         },
         steps: [stepSchema],
         reviews: [reviewSchema],
+        paymentInfo: paymentInfoSchema,
     },
     {
         toJSON: {
