@@ -1,6 +1,7 @@
 const reviewSchema = new Schema(
     {
-        user: {
+        // This is weird. 
+        userId: {
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: true,
@@ -8,7 +9,7 @@ const reviewSchema = new Schema(
         rating: {
             type: Number,
             min: 1,
-            max: 10,
+            max: 5,
             required: true,
         },
         reviewText: {
