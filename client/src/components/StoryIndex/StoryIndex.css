@@ -1,0 +1,72 @@
+.story-index {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #f0e1d0;
+    padding: 10px;
+    height: 100vh;
+}
+
+.header {
+    background-color: #e0c090;
+    padding: 10px;
+}
+
+.nav-link {
+    font-size: 20px;
+    color: #000;
+    text-decoration: none;
+}
+
+.story-main-content {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 10px;
+    background-color: #e1d5ca;
+    padding: 20px;
+}
+
+.story-photo {
+    background-color: #6d503c;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.rating {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 10px;
+}
+
+.star {
+    color: #ffcc00;
+    font-size: 20px;
+}
+
+.genre-tags-links {
+    background-color: #e8b58b;
+    padding: 10px;
+    text-align: center;
+}
+
+.story-description {
+    grid-column: span 2;
+    background-color: #847d7c;
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.start-adventure-button {
+    grid-column: span 2;
+    background-color: #b0627b;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+}
