@@ -1,9 +1,11 @@
-import ReactDOM from 'react-dom/client'
+// import ReactDOM from 'react-dom/client'
+import ReactDOM from "react-dom";
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 // import bootstrap or other css framework here if needed
 
 import App from './App.jsx'
-import TreeComponent from './components/Tree/TreeComponent.jsx';
+import Tree from './components/Tree/index.jsx';
 // import necessary pages here which will be rendered as elements in the children for react router
 
 const router = createBrowserRouter([
@@ -16,7 +18,7 @@ const router = createBrowserRouter([
             {
                 // Added in element for TreeComponent - Haleigh
                 index: true,
-                element: <TreeComponent />
+                element: <Tree />
             }, 
             // {
             //     path: '/some-path',
