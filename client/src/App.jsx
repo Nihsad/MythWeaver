@@ -6,8 +6,10 @@ import {
     createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-// import { Outlet } from 'react-router-dom';
-import Tree from './components/Tree/index';
+
+import { Outlet } from 'react-router-dom';
+// import Tree from './components/Tree/index';
+
 
 const httpLink = createHttpLink({
     uri: '/graphql',
@@ -31,12 +33,12 @@ const client = new ApolloClient({
     cache: new InMemoryCache(),
 });
 
+//DO NOT make changes to this function. it breaks the display.
 function App() {
     return (
-        <div>
-            <h1>This is the App Component</h1>
-            <Tree/> {/* Ensure TreeComponent is rendered */}
-        </div>
+        <ApolloProvider client={client}>
+            <Outlet />
+        </ApolloProvider>
     );
 }
 

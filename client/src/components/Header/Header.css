@@ -1,0 +1,27 @@
+.header {
+    width: 100%;
+    background-color: #d3c1b1; /* Beige background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.header-nav {
+    font-size: 24px;
+}
+
+.home-link {
+    color: #000; /* Black color */
+    text-decoration: none;
+}
+
+.header-title {
+    font-size: 36px;
+    color: #000; /* Black color */
+}
+
+.header-right-element {
+    font-size: 16px;
+    color: #000; /* Black color */
+}

@@ -1,0 +1,143 @@
+/* General styles for the Create Story page */
+.create-story-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #d3c1b1; /* Beige background */
+    min-height: 100vh;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.create-story-header {
+    width: 100%;
+    background-color: #d3c1b1; /* Beige background */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.home-link {
+    font-size: 24px;
+    color: #000; /* Black color */
+    text-decoration: none;
+}
+
+.create-story-title {
+    font-size: 36px;
+    color: #000; /* Black color */
+}
+
+.change-theme-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #000; /* Black color */
+    cursor: pointer;
+}
+
+.create-story-content {
+    display: flex;
+    width: 100%;
+}
+
+.create-story-sidebar {
+    width: 200px;
+    background-color: #e29e7c; /* Orange background */
+    padding: 20px;
+    border-radius: 0 20px 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: left;
+}
+
+.story-title {
+    font-size: 24px;
+    color: #523B87; /* Purple color */
+    margin-bottom: 10px;
+}
+
+.story-options {
+    list-style: none;
+    padding: 0;
+}
+
+.story-option {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.story-option.new { color: #FF7276; /* Red color */ }
+.story-option.edit { color: #A0CC57; /* Green color */ }
+.story-option.rename { color: #FF7276; /* Red color */ }
+.story-option.test { color: #A0CC57; /* Green color */ }
+.story-option.build { color: #FF7276; /* Red color */ }
+.story-option.delete { color: #FF0000; /* Bright red color */ }
+
+.create-story-main {
+    display: flex;
+    flex-grow: 1;
+    background-color: #d3c1b1; /* Beige background */
+    padding: 20px;
+}
+
+.story-graph {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    position: relative;
+}
+
+.node {
+    width: 100px;
+    height: 50px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff; /* White color */
+    position: absolute;
+}
+
+.purple { background-color: #523B87; left: 10%; }
+.blue { background-color: #7AC4C1; left: 30%; }
+.aqua { background-color: #2DB6C8; left: 50%; top: 10%; }
+.pink { background-color: #D6768E; left: 50%; top: 50%; }
+
+.story-editor {
+    background-color: #d3b1b1; /* Beige background */
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+}
+
+.editor-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #D6768E; /* Pink background */
+    padding: 10px;
+    border-radius: 20px 20px 0 0;
+    color: #000; /* Black color */
+}
+
+.close-button {
+    background: none;
+    border: none;
+    color: #fff; /* White color */
+    cursor: pointer;
+}
+
+.editor-content {
+    width: 100%;
+    height: 200px;
+    background-color: #b5a3a3; /* Light beige background */
+    border: none;
+    border-radius: 0 0 20px 20px;
+    padding: 10px;
+    font-size: 16px;
+    color: #000; /* Black color */
+    resize: none;
+    outline: none;
+}
