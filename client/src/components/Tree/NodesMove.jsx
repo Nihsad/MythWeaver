@@ -1,8 +1,10 @@
 import React, { Fragment } from "react";
 import { Group } from "@vx/group";
 import { NodeGroup } from "react-move";
-import Node from "./TreeComponent";
+import Node from "./Node";
 import { findCollapsedParent, getTopLeft } from "./utils";
+
+
 
 function Nodes({ nodes, layout, orientation, onNodeClick }) {
   return (

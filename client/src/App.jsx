@@ -6,8 +6,10 @@ import {
     createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+
 import { Outlet } from 'react-router-dom';
 // import Tree from './components/Tree/index';
+
 
 const httpLink = createHttpLink({
     uri: '/graphql',
