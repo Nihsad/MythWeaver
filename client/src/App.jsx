@@ -7,7 +7,7 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 // import { Outlet } from 'react-router-dom';
-import TreeComponent from './components/Tree/TreeComponent';
+import Tree from './components/Tree/index';
 
 const httpLink = createHttpLink({
     uri: '/graphql',
@@ -35,7 +35,7 @@ function App() {
     return (
         <div>
             <h1>This is the App Component</h1>
-            <TreeComponent /> {/* Ensure TreeComponent is rendered */}
+            <Tree/> {/* Ensure TreeComponent is rendered */}
         </div>
     );
 }
