@@ -23,6 +23,7 @@
     text-align: center;
     text-decoration: none;
     font-size: 1rem;
+    transition: all ease-in-out 0.5s;
   }
   
   .header-button:hover {

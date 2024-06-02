@@ -12,6 +12,7 @@
     align-items: center;
     justify-content: center;
     flex-grow: 1;
+    max-width: 50vw;
 }
 
 .about-us-card {
@@ -20,17 +21,18 @@
     padding: 20px;
     margin: 10px;
     text-align: center;
-    max-width: 500px;
 }
 
 .about-us-title {
     font-size: 24px;
     margin-bottom: 10px;
+    color: var(--header-text);
 }
 
 .about-us-description {
     font-size: 18px;
     line-height: 1.5;
+    color: var(--text-color);
 }
 
 .team-grid {
@@ -43,16 +45,17 @@
     display: flex;
     flex-direction: column;
     grid-column: span 2;
-    border: 1px solid black;
-    background-color: lavender;
+    border: 1px solid var(--text-color);
+    background-color: var(--accent-container);
     padding: 5px;
-    border-radius: 15px;
+    border-radius: var(--border-radius);
 }
 
 .team-member-info {
     display: flex;
     align-items: center;
     align-content: center;
+    color: var(--text-color);
 }
 
 .team-member-img {
@@ -70,7 +73,16 @@
 
 .team-member-name {
     margin: 0;
-    text-align: center;
+    color: var(--header-title);
+    transition: all ease-in-out 0.5s;
+}
+
+.team-member-info:hover .team-member-name {
+    text-shadow: 0px 0px 2px var(--header-text);
+}
+
+.team-member-name:nth-child(even) {
+    text-align: right;
 }
 
 .team-member-description {

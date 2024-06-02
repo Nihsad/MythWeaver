@@ -3,9 +3,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #d3c1b1; /* Beige background */
+    background-color: var(--bg-color);
     min-height: 100vh;
-    font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 .story-splash-main {
@@ -13,34 +12,34 @@
     justify-content: center;
     align-items: center;
     flex-grow: 1;
-    background-color: rgb(207, 197, 198); /* Beige background */
+    background-color: var(--bg-color);
     width: 100%;
     padding: 20px;
 }
 
 .story-splash-card {
-    background-color: #e29e7c; /* Orange background */
+    background-color: var(--dk-container-color);
     border-radius: 20px;
     padding: 40px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px var(--mid-dark-accent);
 }
 
 .story-splash-name {
     font-size: 32px;
-    color: #fff; /* White color */
+    color: var(--header-text);
     margin-bottom: 10px;
 }
 
 .story-splash-description {
     font-size: 18px;
-    color: #fff; /* White color */
+    color: var(--header-title);
     margin-bottom: 20px;
 }
 
 .story-splash-button {
-    background-color: #b0565d; /* Maroon background */
-    color: #fff; /* White color */
+    background-color: var(--button-accent);
+    color: var(--header-link-hover); 
     border: none;
     border-radius: 20px;
     padding: 10px 20px;
@@ -50,5 +49,5 @@
 }
 
 .story-splash-button:hover {
-    background-color: #9b3f4e; /* Darker maroon */
+    background-color: var(--dk-button-accent); 
 }
