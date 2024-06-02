@@ -1,7 +1,4 @@
 const { Schema, model } = require('mongoose');
-const stepSchema = require('./Step');
-const reviewSchema = require('./Review');
-const paymentInfoSchema = require('./PaymentInfo');
 
 const storySchema = new Schema(
     {
@@ -9,9 +6,14 @@ const storySchema = new Schema(
             type: String,
             required: true,
         },
+        // Change this back when ready
+        // author: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'User',
+        //     required: true,
+        // },
         author: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
+            type: String, 
             required: true,
         },
         description: {
@@ -21,37 +23,27 @@ const storySchema = new Schema(
         imageUrl: {
             type: String,
         },
-        // I'm thinking that the possible values for storyStyle could be called Solo Adventure (web style, story is prewritten with options that define outcomes), Co-written (story is written as votes are cast, with the author providing the choices), and Reader Driven (story is written as votes are cast, with the readers providing the choices)
-        storyStyle: {
-            type: String, 
-            enum: ['Solo Adventure', 'Co-written', 'Reader Driven'],
-            required: true,
-        },
-        genre: {
-            type: [String],
-            required: true,
-        },
-        tags: [String],
-        // 1 = PG, 10 = Rated R or NC-17, something along those lines
-        maturityLevel: {
+        price: {
             type: Number,
-            min: 1,
-            max: 10,
             required: true,
+            default: 0,
         },
         publishedDate: {
             type: Date,
             default: Date.now,
-            required: true,
         },
-        lastUpdatedDate: {
-            type: Date,
-            default: Date.now,
-            required: true,
-        },
-        steps: [stepSchema],
-        reviews: [reviewSchema],
-        paymentInfo: paymentInfoSchema,
+        steps: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Step'
+            },
+        ],
+        reviews: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Review'
+            },
+        ],
     },
     {
         toJSON: {
@@ -61,7 +53,7 @@ const storySchema = new Schema(
     },
 );
 
-// Average rating calculated from all the 1-10 ratings users have given this story.
+// Average rating calculated from all the 1-5 ratings users have given this story.
 storySchema.virtual('averageRating').get(function () {
     if (this.reviews.length === 0) {
         return 0;
@@ -74,7 +66,7 @@ storySchema.virtual('averageRating').get(function () {
 
 // The number of users who have left a rating for this story
 storySchema.virtual('ratingsCount').get(function () {
-    // This works since rating is a required field on the reviewSchema
+    // This works since rating is a required field on the review model
     return this.reviews.length;
 });
 

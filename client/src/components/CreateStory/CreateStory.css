@@ -141,3 +141,16 @@
     resize: none;
     outline: none;
 }
+
+/* Quick styles added for create story test button, feel free to change however - Sara */
+.submit-story-test-btn {
+    background-color: #b0627b;
+    color: #fff;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    text-align: center;
+}
