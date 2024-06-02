@@ -1,40 +1,52 @@
 const typeDefs = `
 
     type User {
+        _id: ID!
         username: String!
         email: String!
         password: String!
-        authorInfo: AuthorInfo!
-        readerInfo: ReaderInfo!
+        authorInfo: AuthorInfo
+        readerInfo: ReaderInfo
         createdStoriesCount: Int
-        playedStoriesCount: Int
+        savedStoriesCount: Int
+    }
+
+    type Auth {
+        token: ID!
+        user: User
     }
 
     type AuthorInfo {
-        createdStories: [Story]!
+        # used to be createdStories: [Story]!
+        createdStories: [ID]
     }
 
     type ReaderInfo {
-        purchasedStories: [Story]!
-        playedStories: [PlayedStories]!
+        # used to be purchasedStories: [Story]!
+        purchasedStories: [ID]
+        savedStories: [SavedStories]
+        # used to be toBeReadStories: [Story]!
+        toBeReadStories: [ID]
     }
     
-    type PlayedStories {
-        storyId: ID!
-        rating: Int!
+    type SavedStories {
+        storyId: ID
+        rating: Int
     }
 
     type Story {
         _id: ID!
         title: String!
-        # change back to author: User! when ready. Well, not quite that since it has to be a specific part of user. 
-        author: String!
+        # Currently working with this field and trying to find a way to successfully get author as a string when doing GET_STORIES query. May need to change to String! and adjust ADD_STORY mutation.
+        author: ID!
         description: String!
         imageUrl: String
         price: Int!
         publishedDate: String
         steps: [Step]!
         reviews: [Review]
+        averageRating: Int
+        ratingsCount: Int
     }
 
     type Step {
@@ -64,20 +76,23 @@ const typeDefs = `
 
     type Review {
         _id: ID!
-        # change back to User! when ready
-        username: String!
+        # Current plan is to store the user's ID and populate into a username as needed
+        username: ID!
         rating: Int!
         reviewText: String
         createdAt: String
     }
 
     type Query {
+        profile: User
         stories: [Story]
         story(_id: ID!): Story
     }
 
     type Mutation {
-        addStory(title: String!, author: String!, description: String!, imageUrl: String, price: Int!, steps: [StepInput]!): Story
+        addUser(username: String!, email: String! password: String!): Auth
+        login(email: String!, password: String!): Auth
+        addStory(title: String!, author: ID!, description: String!, imageUrl: String, price: Int!, steps: [StepInput]!): Story
     }
 `;
 

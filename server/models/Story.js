@@ -7,15 +7,15 @@ const storySchema = new Schema(
             required: true,
         },
         // Change this back when ready
-        // author: {
-        //     type: Schema.Types.ObjectId,
-        //     ref: 'User',
-        //     required: true,
-        // },
         author: {
-            type: String, 
+            type: Schema.Types.ObjectId,
+            ref: 'User',
             required: true,
         },
+        // author: {
+        //     type: String, 
+        //     required: true,
+        // },
         description: {
             type: String,
             required: true,
@@ -32,18 +32,16 @@ const storySchema = new Schema(
             type: Date,
             default: Date.now,
         },
-        steps: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Step'
-            },
-        ],
-        reviews: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Review'
-            },
-        ],
+        steps: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Step',
+            default: [],
+        }],
+        reviews: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Review',
+            default: [],
+        }],
     },
     {
         toJSON: {
