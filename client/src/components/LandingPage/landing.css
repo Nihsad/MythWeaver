@@ -1,0 +1,61 @@
+.landing-page {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.hero {
+  background: #CFC5C6;
+  padding: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh; /* Make the hero section take the full viewport height */
+}
+
+.title {
+  margin: 0;
+  font-size: 48px;
+  color: #333;
+}
+
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background:#A94E6F;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.cta-button:hover {
+  background: #51A3A6;
+}
+
+.images-section {
+  background: #fff;
+  padding: 50px 0;
+}
+
+.images-section .container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.image {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer {
+  background-color: #282c34;
+  padding: 20px 0;
+  color: white;
+  text-align: center;
+  margin-top: 20px;
+}
