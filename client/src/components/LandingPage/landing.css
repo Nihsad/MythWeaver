@@ -10,16 +10,30 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  height: 100vh; /* Make the hero section take the full viewport height */
+  height: 100vh; 
 }
 
 .title {
   margin: 0;
-  font-size: 48px;
+  font-size: 50px;
   color: #333;
+  position: relative; 
+  top: -250px; 
+  left: -20px; 
+}
+
+.slogan {
+  position: relative;
+  top: -230px; 
+  left: -30px;
+  font-size: 20px;
 }
 
 .cta-button {
+  position: absolute; 
+  bottom: 43%; 
+  left: 49%; 
+  transform: translateX(-50%); 
   display: inline-block;
   padding: 10px 20px;
   background:#A94E6F;
@@ -27,8 +41,8 @@
   text-decoration: none;
   border-radius: 5px;
   font-size: 18px;
-  margin-top: 20px;
 }
+
 
 .cta-button:hover {
   background: #51A3A6;
@@ -51,6 +65,49 @@
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
+.upright {
+  position: absolute;
+  top: 50%; 
+  left: 25%; 
+  transform: translateY(-50%);
+}
+
+.upside-down {
+  position: absolute;
+  top: 50%;
+  right: 25%; 
+  transform: translateY(-50%);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .footer {
   background-color: #282c34;
