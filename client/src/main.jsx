@@ -1,6 +1,5 @@
 // import ReactDOM from 'react-dom/client'
 import ReactDOM from 'react-dom/client'; // Correct import for createRoot
-import ReactDOM from "react-dom";
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 // import bootstrap or other css framework here if needed
@@ -47,7 +46,7 @@ const router = createBrowserRouter([
             //     path: '/author-tree',
             //     element: <Tree />
             // }
-            }, 
+            
         ]
     }
 ]);
