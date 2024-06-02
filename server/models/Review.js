@@ -1,7 +1,8 @@
+const { Schema, model } = require('mongoose');
+
 const reviewSchema = new Schema(
     {
-        // This is weird. 
-        userId: {
+        username: {
             type: Schema.Types.ObjectId,
             ref: 'User',
             required: true,
@@ -22,4 +23,6 @@ const reviewSchema = new Schema(
     },
 );
 
-module.exports = reviewSchema;
+const Review = model('Review', reviewSchema);
+
+module.exports = Review;

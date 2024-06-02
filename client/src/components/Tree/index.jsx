@@ -1,7 +1,7 @@
-import React from "react";
-import { render } from "react-dom";
-import Tree from "./Tree";
-import data from "./data";
+// import React from "react";
+// import { render } from "react-dom";
+// import Tree from "./Tree";
+// import data from "./data";
 
 const App = () => {
   return (
