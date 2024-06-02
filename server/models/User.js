@@ -67,9 +67,9 @@ userSchema.virtual('createdStoriesCount').get(function () {
     return this.authorInfo.createdStories.length;
 });
 
-// Number of stories the user has read/played. Can remove if we don't end up using it. 
-userSchema.virtual('playedStoriesCount').get(function () {
-    return this.readerInfo.playedStories.length;
+// Number of stories the user has played and saved. Can remove if we don't end up using it. 
+userSchema.virtual('savedStoriesCount').get(function () {
+    return this.readerInfo.savedStories.length;
 });
 
 const User = model('User', userSchema);

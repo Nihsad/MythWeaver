@@ -1,7 +1,22 @@
 import React from 'react';
 import './UserProfile.css';
+import Auth from '../../utils/auth';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_PROFILE } from '../../utils/queries';
 
 const UserProfile = () => {
+
+    // ADD APPROPRIATE AUTH STUFF AND SUCH. THIS IS JUST A TEST OF THE QUERY SO FAR
+    const { loading, data } = useQuery(GET_PROFILE);
+    const userData = data?.profile || {};
+
+    if (loading) {
+        return <h2>LOADING...</h2>;
+    }
+
+    console.log('The console log which follows is the userData obtained from GET_PROFILE:');
+    console.log(userData);
+
     return (
         <div className="user-profile">
             <header className="header">
