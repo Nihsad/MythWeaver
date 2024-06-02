@@ -3,14 +3,7 @@ import './StoryIndex.css';
 
 const StoryIndex = () => {
     return (
-        <div className="story-index">
-            <header className="header">
-                <nav>
-                    <a href="/" className="nav-link">Home</a>
-                    <h1>Story Title</h1>
-                    <a href="#" className="nav-link">Change Theme</a>
-                </nav>
-            </header>
+        <div className="story-index">            
             <main className="story-main-content">
                 <div className="story-photo"><img src="https://picsum.photos/200/200" /></div>
                 <div className="rating">

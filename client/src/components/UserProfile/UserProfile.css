@@ -13,34 +13,6 @@ body {
     align-items: center;
 }
 
-.header {
-    background-color: #d8b899;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.header nav {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.nav-link {
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.header h1 {
-    font-size: 36px;
-    margin: 0;
-}
-
 .main-content {
     flex-grow: 1;
     display: flex;

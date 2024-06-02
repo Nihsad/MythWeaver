@@ -4,13 +4,6 @@ import './CreateStory.css';
 function CreateStory() {
     return (
         <div className="create-story-container">
-            <header className="create-story-header">
-                <nav>
-                    <a href="/" className="home-link">Home</a>
-                </nav>
-                <h1 className="create-story-title">Create a new Story</h1>
-                <button className="change-theme-button">Change Theme</button>
-            </header>
             <div className="create-story-content">
                 <aside className="create-story-sidebar">
                     <h2 className="story-title">Title</h2>

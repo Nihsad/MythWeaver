@@ -1,3 +1,31 @@
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/* Default (fairycore) theme */
+:root {
+  font-size: 16px; /* set default for rem */
+  --bg-color: rgb(211, 201, 198); /* #d3c9c6 */
+  --text-color: #000000; 
+  --container-color: rgb(132, 125, 124); /* #dff0f8 */
+  --border-radius: 10px;
+  
+  /* HEADER VARIABLES */
+  --header-bg: rgb(216, 184, 153); /* #d8b899 */
+  --header-text: rgb(201, 95, 126); /* #c95f7e */
+  --header-title: rgb(129, 106, 166); /* #816aa6 */
+  --header-shadow: rgb(201, 95, 126); /* #c95f7e */
+  --header-link-hover: rgb(223, 240, 248); /* #dff0f8 */
+}
+  
+  /* Dark theme */
+[data-theme="cyberpunk"] {
+  --bg-color: #333333;
+  --text-color: #ffffff;
+}
+
+/* Fantasy theme */
+[data-theme="fantasy"] {
+  --bg-color: goldenrod;
+  --text-color: #ffffff;
 }

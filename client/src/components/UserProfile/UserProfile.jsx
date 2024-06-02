@@ -3,14 +3,7 @@ import './UserProfile.css';
 
 const UserProfile = () => {
     return (
-        <div className="user-profile">
-            <header className="header">
-                <nav>
-                    <a href="/" className="nav-link">Home</a>
-                    <h1>User Profile</h1>
-                    <a href="#" className="nav-link">Change Theme</a>
-                </nav>
-            </header>
+        <div className="user-profile">            
             <main className="main-content">
                 <div className="button-container">
                     <div className="profile-button">Create A New Story</div>

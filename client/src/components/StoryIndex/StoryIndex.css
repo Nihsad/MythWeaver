@@ -1,41 +1,7 @@
 .story-index {
     font-family: 'Comic Sans MS', cursive, sans-serif;
-    background-color: #f0e1d0;
+    background-color: #d3c9c6;
     height: 100vh;
-}
-
-.header {
-    background-color: #d8b899;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.header nav {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.nav-link {
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.header h1 {
-    font-size: 36px;
-    margin: 0;
-}
-
-.nav-link {
-    font-size: 20px;
-    color: #000;
-    text-decoration: none;
 }
 
 .story-main-content {
@@ -43,7 +9,7 @@
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
     gap: 10px;
-    background-color: #e1d5ca;
+    background-color: #d3c9c6;
     padding: 20px;
     min-height: fit-content;
     max-height: 100vh;
