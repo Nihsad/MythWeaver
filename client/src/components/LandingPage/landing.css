@@ -81,33 +81,31 @@
   transform: translateY(-50%);
 }
 
+.book-image {
+  position: absolute;
+  top: 10%; 
+  right: 40%; 
+}
 
+.coinpurse-image {
+  position: absolute;
+  bottom: 29%; 
+  right: 31%; 
+}
 
+.bag-image {
+  position: absolute;
+  bottom: 18%;
+  left: 36%;
+  transform: translate(-50%, -50%);
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.map-image {
+  position: absolute;
+  top: 26.2%;
+  left: 37%;
+  transform: translate(-50%, -50%);
+}
 
 .footer {
   background-color: #282c34;
@@ -115,4 +113,17 @@
   color: white;
   text-align: center;
   margin-top: 20px;
+}
+
+/* When the screen gets smaller than the average screen the smaller images disapear. - Haleigh */
+
+@media (max-width: 1700px) {
+  .book-image,
+  .bag-image,
+  .coinpurse-image,
+  .map-image,
+  .upright,
+  .upside-down {
+    display: none; 
+  }
 }
