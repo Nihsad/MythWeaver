@@ -70,6 +70,8 @@
 .story-7 { background-color: #8b5e3c; }
 .story-8 { background-color: #edb08b; }
 
+
+/* Animation added to stories - Haleigh */
 @keyframes heartbeat {
   0% {
       transform: scale(1);

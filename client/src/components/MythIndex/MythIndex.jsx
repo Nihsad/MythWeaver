@@ -99,6 +99,3 @@ const MythIndex = () => {
 }
 
 export default MythIndex;
-
-
-
