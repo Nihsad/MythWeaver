@@ -11,6 +11,7 @@ import StoryIndex from './components/StoryIndex/StoryIndex.jsx';
 import StorySplash from './components/StorySplash/StorySplash.jsx';
 import CreateStory from './components/CreateStory/CreateStory.jsx';
 import AboutUs from './components/AboutUs/AboutUs.jsx';
+import Landing from './components/LandingPage/landing.jsx'; 
 
 // import necessary pages here which will be rendered as elements in the children for react router
 
@@ -21,8 +22,10 @@ const router = createBrowserRouter([
         errorElement: <h1 className='display-2'>Wrong page!</h1>,
         children: [
             {
-                // Added in element for TreeComponent - Haleigh
                 index: true,
+                element: <Landing /> 
+            }, {
+                path: '/myth-index',
                 element: <MythIndex />
             }, {
                 path: '/user-profile',

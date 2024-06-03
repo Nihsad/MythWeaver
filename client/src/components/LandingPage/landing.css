@@ -1,0 +1,132 @@
+.landing-page {
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.hero {
+  background: #CFC5C6;
+  padding: 100px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh; 
+  margin-bottom: -100px;
+}
+
+.title {
+  margin: 0;
+  font-size: 50px;
+  color: #333;
+  position: relative; 
+  top: -250px; 
+  left: -20px; 
+}
+
+.slogan {
+  position: relative;
+  top: -230px; 
+  left: -30px;
+  font-size: 20px;
+}
+
+.cta-button {
+  position: absolute; 
+  bottom: 43%; 
+  left: 49%; 
+  transform: translateX(-50%); 
+  display: inline-block;
+  padding: 10px 20px;
+  background:#A94E6F;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 18px;
+}
+
+
+.cta-button:hover {
+  background: #51A3A6;
+}
+
+/* .images-section {
+  background: #fff;
+  padding: 50px 0;
+} */
+
+.images-section .container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  
+}
+
+.image {
+  width: 300px;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.upright {
+  position: absolute;
+  top: 50%; 
+  left: 25%; 
+  transform: translateY(-50%);
+}
+
+.upside-down {
+  position: absolute;
+  top: 50%;
+  right: 25%; 
+  transform: translateY(-50%);
+}
+
+.book-image {
+  position: absolute;
+  top: 10%; 
+  right: 40%; 
+}
+
+.coinpurse-image {
+  position: absolute;
+  bottom: 29%; 
+  right: 31%; 
+}
+
+.bag-image {
+  position: absolute;
+  bottom: 18%;
+  left: 36%;
+  transform: translate(-50%, -50%);
+}
+
+.map-image {
+  position: absolute;
+  top: 26.2%;
+  left: 37%;
+  transform: translate(-50%, -50%);
+}
+
+.footer {
+   background: #3e3b3b;
+  padding: 50px 0; 
+  color: rgb(206, 115, 220);
+  text-align: center;
+  margin-bottom: -100px;
+}
+
+
+/* When the screen gets smaller than the average screen the smaller images disapear. - Haleigh */
+
+@media (max-width: 1700px) {
+  .book-image,
+  .bag-image,
+  .coinpurse-image,
+  .map-image,
+  .upright,
+  .upside-down {
+    display: none; 
+  }
+}
