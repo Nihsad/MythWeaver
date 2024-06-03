@@ -69,3 +69,21 @@
 .story-6 { background-color: #dda15e; }
 .story-7 { background-color: #8b5e3c; }
 .story-8 { background-color: #edb08b; }
+
+@keyframes heartbeat {
+  0% {
+      transform: scale(1);
+  }
+
+  50% {
+      transform: scale(1.1);
+  }
+
+  100% {
+      transform: scale(1);
+  }
+}
+
+.heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite both;
+}

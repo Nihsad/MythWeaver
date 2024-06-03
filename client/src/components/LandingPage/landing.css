@@ -84,7 +84,7 @@
 
 .book-image {
   position: absolute;
-  top: 9.7%; 
+  top: 9.8%; 
   right: 40%; 
 }
 
@@ -103,8 +103,8 @@
 
 .map-image {
   position: absolute;
-  top: 26.2%;
-  left: 37%;
+  top: 26.1%;
+  left: 36.9%;
   transform: translate(-50%, -50%);
 }
 
@@ -115,6 +115,17 @@
   text-align: center;
   margin-bottom: -100px;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* When the screen gets smaller than the average screen the smaller images disapear. - Haleigh */
