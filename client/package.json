@@ -17,7 +17,8 @@
     "graphql": "^16.6.0",
     "jwt-decode": "^3.1.2",
     "react-bootstrap": "^2.7.4",
-    "bootstrap": "^5.2.3"
+    "bootstrap": "^5.2.3",
+    "animate.css": "^4.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

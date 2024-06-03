@@ -1,8 +1,6 @@
 import ReactDOM from 'react-dom/client'; // Correct import for createRoot
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 // import Tree from './components/Tree/index.jsx;'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-// import bootstrap or other css framework here if needed
 
 import App from './App.jsx';
 import Layout from './components/Layout/Layout.jsx';
