@@ -32,6 +32,27 @@
   font-size: 20px;
 }
 
+
+
+/* Animation added to stories - Haleigh */
+@keyframes heartbeat {
+  0% {
+      transform: scale(1);
+  }
+
+  50% {
+      transform: scale(1.1);
+  }
+
+  100% {
+      transform: scale(1);
+  }
+}
+
+.heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite both;
+}
+
 .story-1 { background-color: var(--story-1); }
 .story-2 { background-color: var(--story-2); }
 .story-3 { background-color: var(--story-3); }

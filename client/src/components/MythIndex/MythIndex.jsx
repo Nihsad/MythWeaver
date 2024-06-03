@@ -55,7 +55,7 @@ const MythIndex = () => {
             <main className="main-content">
                 <div className="story-grid">
                     {Array(8).fill().map((_, index) => (
-                        <div key={index} className={`story story-${index + 1}`}>
+                        <div key={index} className={`story story-${index + 1} heartbeat`}>
                             Story
                         </div>
                     ))}
