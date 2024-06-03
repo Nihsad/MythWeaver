@@ -1,44 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
-
-body {
-    margin: 0;
-    font-family: 'Chewy', cursive, sans-serif;
-}
-
 .user-profile {
-    background-color: #d1c5c5;
+    background-color: var(--bg-color);
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.header {
-    background-color: #d8b899;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-.header nav {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
-}
-
-.nav-link {
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 20px;
-}
-
-.header h1 {
-    font-size: 36px;
-    margin: 0;
 }
 
 .main-content {
@@ -55,16 +20,17 @@ body {
 }
 
 .profile-button {
-    background-color: #e89d75;
+    background-color: var(--button-accent);
     width: 200px;
     height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 15px;
+    border-radius: var(--border-radius);
     font-size: 20px;
-    color: white;
+    color: var(--header-link-hover);
     text-align: center;
+    padding: 5px;
 }
 
 .additional-content {
