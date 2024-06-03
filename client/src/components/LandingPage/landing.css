@@ -11,6 +11,7 @@
   align-items: center;
   flex-direction: column;
   height: 100vh; 
+  margin-bottom: -100px;
 }
 
 .title {
@@ -48,15 +49,16 @@
   background: #51A3A6;
 }
 
-.images-section {
+/* .images-section {
   background: #fff;
   padding: 50px 0;
-}
+} */
 
 .images-section .container {
   display: flex;
   justify-content: center;
   gap: 20px;
+  
 }
 
 .image {
@@ -108,12 +110,13 @@
 }
 
 .footer {
-  background-color: #282c34;
-  padding: 20px 0;
-  color: white;
+   background: #3e3b3b;
+  padding: 50px 0; 
+  color: rgb(206, 115, 220);
   text-align: center;
-  margin-top: 20px;
+  margin-bottom: -100px;
 }
+
 
 /* When the screen gets smaller than the average screen the smaller images disapear. - Haleigh */
 
