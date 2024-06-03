@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App.jsx';
 import Layout from './components/Layout/Layout.jsx';
+import NoHeaderLayout from './components/Layout/NoHeaderLayout.jsx'
 import MythIndex from './components/MythIndex/MythIndex.jsx';
 import UserProfile from './components/UserProfile/UserProfile.jsx';
 import StoryIndex from './components/StoryIndex/StoryIndex.jsx';
@@ -21,31 +22,36 @@ const router = createBrowserRouter([
         errorElement: <h1 className='display-2'>Wrong page!</h1>,
         children: [
           {
-            path: '/',
             element: <Layout />,
             children: [
               {
-                index: true,
-                element: <Landing /> 
-            }, {
-                path: '/myth-index',
+                path: 'myth-index',
                 element: <MythIndex />
-            }, {
-                path: '/user-profile',
+              }, {
+                path: 'user-profile',
                 element: <UserProfile />
-            }, {
-                path: '/story-index',
+              }, {
+                path: 'story-index',
                 element: <StoryIndex />
-            }, {
-                path: '/story-splash',
+              }, {
+                path: 'story-splash',
                 element: <StorySplash />
-            }, {
-                path: '/create-story',
+              }, {
+                path: 'create-story',
                 element: <CreateStory />
-            }, {
-                path: '/about-us',
+              }, {
+                path: 'about-us',
                 element: <AboutUs />
-            }
+              }
+            ],
+          },
+          {
+            element: <NoHeaderLayout />,
+            children: [
+              {
+                index: true,
+                element: <Landing />
+              }
             ],
           },
         ],

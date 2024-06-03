@@ -19,7 +19,7 @@ function Landing() {
         <img src={ScrollImage} alt="Scroll" className="scroll-image" />
         <img src={UprightStaff} alt="StaffUpright" className="staff-image upright" />
         <div className="container">
-          <h1 className="title animate__animated animate__zoomIn">MythWeaver</h1>
+          <h1 className="landing-title animate__animated animate__zoomIn">MythWeaver</h1>
           <p className="slogan">Craft Your Tale, Weave Your Myth</p>
           <Link to="/myth-index" className="cta-button">Start your Adventure</Link>
         </div>

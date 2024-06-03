@@ -27,19 +27,19 @@ const MythIndex = () => {
     return (
         <div className="mythweaver">
             <header className="header">
-                <div className="header-left">
-                    {Auth.loggedIn() ? (
-                        <>
-                            {/* If user is logged in, there should be a 'Log out' link and the Profile link should go to /user-profile. */}
-                            <button className="header-button" onClick={Auth.logout}>Log out</button>
-                            <a href="/user-profile" className="header-link">
-                                <button className="header-button">Profile</button>
-                            </a>
-                        </>
-                    ) : (
-                        <>
-                            {/* If user is not logged in, clicking the 'Log in' link should open the signup/login modal, and clicking the 'Profile' link should also open the signup/login modal because user can't view 'Profile' while logged out. */}
-                            <button className="header-button" onClick={() => setShowModal(true)}>Log in</button>
+	<div className="header-left">
+		{Auth.loggedIn() ? (
+			<>
+				{/* If user is logged in, there should be a 'Log out' link and the Profile link should go to /user-profile. */}
+				<button className="header-button" onClick={Auth.logout}>Log out</button>
+				<a href="/user-profile" className="header-link">
+					<button className="header-button">Profile</button>
+				</a>
+            </>
+            ) : (
+            <>
+                {/* If user is not logged in, clicking the 'Log in' link should open the signup/login modal, and clicking the 'Profile' link should also open the signup/login modal because user can't view 'Profile' while logged out. */}
+                <button className="header-button" onClick={() => setShowModal(true)}>Log in</button>
                             <div className="header-link">
                                 <button className="header-button" onClick={() => setShowModal(true)}>Profile</button>
                             </div>
