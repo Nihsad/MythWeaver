@@ -21,7 +21,11 @@
   position: relative; 
   top: -250px; 
   left: -20px; 
-}
+  animation-duration: 1s; 
+  animation-fill-mode: both;
+  animation-name: zoomIn;
+  }
+  
 
 .slogan {
   position: relative;
@@ -48,11 +52,6 @@
 .cta-button:hover {
   background: #51A3A6;
 }
-
-/* .images-section {
-  background: #fff;
-  padding: 50px 0;
-} */
 
 .images-section .container {
   display: flex;
