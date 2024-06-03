@@ -3,14 +3,7 @@ import './StorySplash.css';
 
 function StorySplash() {
     return (
-        <div className="story-splash-container">
-            <header className="header">
-                <nav>
-                    <a href="/" className="nav-link">Home</a>
-                    <h1>Story Title</h1>
-                    <a href="#" className="nav-link">Change Theme</a>
-                </nav>
-                </header>
+        <div className="story-splash-container">            
             <main className="story-splash-main">
                 <div className="story-splash-card">
                     <h2 className="story-splash-name">Random Story Name:</h2>

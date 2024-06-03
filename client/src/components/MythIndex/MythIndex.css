@@ -1,39 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
-
-* {
-    margin: 0;
-    font-family: 'Chewy', cursive, sans-serif;
-}
-
 .mythweaver {
   text-align: center;
-  background-color: #d3c9c6;
+  background-color: var(--bg-color);
   height: 100vh;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #d2b18a;
-  padding: 10px 20px;
-}
-
-.header-left, .header-right {
-  display: flex;
-  gap: 10px;
-}
-
-.header-button {
-  background: none;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.title {
-  font-size: 36px;
-  margin: 0;
 }
 
 .main-content {
@@ -50,22 +18,25 @@
 }
 
 .story {
-  background-color: #f0ad4e;
-  color: black;
+  background-color: var(--button-accent);
+  color: var(--text-color);
+  text-shadow: 0px 0px 3px var(--dark-accent),
+  0px 1px 1px var(--dark-accent),
+  0px -1px 1px var(--dark-accent);
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100px;
   width: 100px;
-  border-radius: 10px;
+  border-radius: var(--border-radius);
   font-size: 20px;
 }
 
-.story-1 { background-color: #f0ad4e; }
-.story-2 { background-color: #c95f7e; }
-.story-3 { background-color: #8c8a77; }
-.story-4 { background-color: #816aa6; }
-.story-5 { background-color: #dff0f8; }
-.story-6 { background-color: #dda15e; }
-.story-7 { background-color: #8b5e3c; }
-.story-8 { background-color: #edb08b; }
+.story-1 { background-color: var(--story-1); }
+.story-2 { background-color: var(--story-2); }
+.story-3 { background-color: var(--story-3); }
+.story-4 { background-color: var(--story-4); }
+.story-5 { background-color: var(--story-5); }
+.story-6 { background-color: var(--story-6); }
+.story-7 { background-color: var(--story-7); }
+.story-8 { background-color: var(--story-8); }

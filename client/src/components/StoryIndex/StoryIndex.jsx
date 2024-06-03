@@ -3,14 +3,7 @@ import './StoryIndex.css';
 
 const StoryIndex = () => {
     return (
-        <div className="story-index">
-            <header className="header">
-                <nav>
-                    <a href="/" className="nav-link">Home</a>
-                    <h1>Story Title</h1>
-                    <a href="#" className="nav-link">Change Theme</a>
-                </nav>
-            </header>
+        <div className="story-index">            
             <main className="story-main-content">
                 <div className="story-photo"><img src="https://picsum.photos/200/200" /></div>
                 <div className="rating">
@@ -25,13 +18,12 @@ const StoryIndex = () => {
                     <div>Tags</div>
                     <div>Links</div>
                 </div>
-                {/* need to add scrolling capabilities */}
+                {/* should have a max character limit. 400-500? */}
                 <div className="story-description">
                     <h2>Brief Description of Story:</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci ac auctor augue mauris. Nisi est sit amet facilisis magna etiam tempor orci. Elit ut aliquam purus sit amet luctus venenatis lectus. Netus et malesuada fames ac turpis. Donec adipiscing tristique risus nec feugiat in fermentum posuere. Vel eros donec ac odio. Malesuada proin libero nunc consequat interdum varius. Nisi vitae suscipit tellus mauris a diam maecenas sed enim. Vitae tempus quam pellentesque nec nam aliquam sem et.</p>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci ac auctor augue mauris. Nisi est sit amet facilisis magna etiam tempor orci. Elit ut aliquam purus sit amet luctus venenatis lectus. Netus et malesuada fames ac turpis. Donec adipiscing tristique risus nec feugiat in fermentum posuere. Vel eros donec ac odio. Malesuada proin libero nunc consequat interdum varius. Nisi vitae suscipit tellus mauris a diam maecenas sed enim. Vitae tempus quam pellentesque nec nam aliquam sem et.</p>
-                </div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci ac auctor augue mauris. Nisi est sit amet facilisis magna etiam tempor orci. Elit ut aliquam purus sit amet luctus venenatis lectus. Netus et malesuada fames ac turpis. Donec adipiscing tristique risus nec feugiat in fermentum posuere. Vel eros donec ac odio. Malesuada proin libero nunc consequat interdum varius. Nisi vitae suscipit tellus mauris a diam maecenas sed enim. Vitae tempus quam pellentesque nec nam aliquam sem et.</p>                          
                 <button className="start-adventure-button">Start your Adventure Here</button>
+                </div>
             </main>
         </div>
     );

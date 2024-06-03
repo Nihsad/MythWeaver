@@ -3,14 +3,7 @@ import './AboutUs.css';
 
 function AboutUs() {
     return (
-        <div className="about-us-container">
-            <header className="header">
-                <nav>
-                    <a href="/" className="nav-link">Home</a>
-                    <h1>About Us</h1>
-                    <a href="#" className="nav-link">Change Theme</a>
-                </nav>
-            </header>
+        <div className="about-us-container">           
             <main className="about-us-main">
                 <div className="about-us-card">
                     <h2 className="about-us-title">Our Story</h2>
