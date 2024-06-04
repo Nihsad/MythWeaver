@@ -19,7 +19,7 @@ function Landing() {
         <img src={ScrollImage} alt="Scroll" className="scroll-image" />
         <img src={UprightStaff} alt="StaffUpright" className="staff-image upright" />
         <div className="container">
-          <h1 className="title animate__animated animate__zoomIn">MythWeaver</h1>
+          <h1 className="landing-title animate__animated animate__zoomIn">MythWeaver</h1>
           <p className="slogan">Craft Your Tale, Weave Your Myth</p>
           <Link to="/myth-index" className="cta-button">Start your Adventure</Link>
         </div>
@@ -32,11 +32,6 @@ function Landing() {
           <img src={Map} alt="Map" className="map-image" />
         </div>
       </section>
-      <footer className="footer">
-        <div className="container">
-          <p>&copy; 2024 MythWeaver. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -42,7 +42,7 @@ const StoryIndex = () => {
     const { storyName, storyImage, storyDescription, chapters } = location.state || {};
 
     const startStory = () => {
-        navigate('/read-story', { state: { storyName, chapters } });
+        navigate('/story-path', { state: { storyName, chapters } });
     };
 
     if (!storyName || !chapters) {
@@ -78,4 +78,3 @@ const StoryIndex = () => {
 };
 
 export default StoryIndex;
-

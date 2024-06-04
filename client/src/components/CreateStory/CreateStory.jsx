@@ -486,7 +486,7 @@ import Modal from 'react-modal';
 import './CreateStory.css';
 
 function CreateStory() {
-    const [isInitialModalOpen, setIsInitialModalOpen] = useState(true);
+    const [isInitialModalOpen, setIsInitialModalOpen] = useState(false);
     const [isChapterModalOpen, setIsChapterModalOpen] = useState(false);
     const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
 
