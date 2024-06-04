@@ -167,14 +167,16 @@ function CreateStory() {
         const chapter = chapters[chapterIndex];
         if (!chapter) return null;
 
+        const indentClass = `indent-${depth}`;
+
         return (
-            <div key={chapterIndex} style={{ marginLeft: depth * 20 }}>
+            <div className={`chapter-wrapper ${indentClass}`} key={chapterIndex}>
                 <button onClick={() => editChapter(chapterIndex)}>
                     {chapter.title}
                 </button>
                 <div>
                     {chapter.options.map((option, optionIndex) => (
-                        <div key={optionIndex}>
+                        <div key={optionIndex} className={depth < 9 ? `indent-${depth + 1}` : ''}>
                             <button onClick={() => addNewChapterForOption(chapterIndex, optionIndex)}>
                                 {option.choiceText || `Option ${optionIndex + 1}`}
                             </button>
@@ -196,10 +198,12 @@ function CreateStory() {
         <div className="create-story-container">
             <div className="create-story-content">
                 {!hasStartedStory && (
-                    <button onClick={() => setIsInitialModalOpen(true)}>Create Story</button>
+                    <button className="create-story-button" onClick={() => setIsInitialModalOpen(true)}>Create Story</button>
                 )}
-                {chapters.length > 0 && renderChapters(0)}
-                {chapters.length > 0 && <button onClick={finalizeStory}>Finalize Story</button>}
+                <div className="chapter-container">
+                    {chapters.length > 0 && renderChapters(0)}
+                </div>
+                {chapters.length > 0 && <button className="finalize-story-button" onClick={finalizeStory}>Finalize Story</button>}
             </div>
 
             <Modal
@@ -302,4 +306,3 @@ function CreateStory() {
 }
 
 export default CreateStory;
-
