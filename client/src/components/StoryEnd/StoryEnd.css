@@ -48,3 +48,9 @@
     opacity: 0.8;
     background-color: var(--header-title);
 }
+
+.bookmark a,
+.bookmark a:hover {
+    color: var(--header-link-hover);
+    text-decoration: none;
+}
