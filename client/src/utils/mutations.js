@@ -27,14 +27,16 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_STORY = gql`
-    mutation addStory($title: String!, $author: ID!, $description: String!, $imageUrl: String, $price: Int!, $steps: [StepInput]!) {
-        addStory(title: $title, author: $author, description: $description, imageUrl: $imageUrl, price: $price, steps: $steps) {
+    mutation addStory($storyInput: StoryInput!) {
+        addStory(input: $storyInput) {
             _id 
             title
             author
             description
             imageUrl
             price
+            genre
+            tags
             publishedDate
             steps {
                 _id
@@ -46,13 +48,58 @@ export const ADD_STORY = gql`
                     nextStepId
                 }
             }
-            reviews {
-                _id
-                username
-                rating
-                reviewText
-                createdAt
+        }
+    }
+`;
+
+export const ADD_TO_TBR = gql`
+    mutation addToTBR($storyId: ID!) {
+        addToTBR(storyId: $storyId) {
+            _id
+            username
+            authorInfo {
+                createdStories
             }
+            readerInfo {
+                purchasedStories
+                bookmarkedStories {
+                    storyId
+                    rating
+                }
+                toBeReadStories
+            }
+        }
+    }
+`;
+
+export const ADD_TO_BOOKMARKS = gql`
+    mutation addToBookmarks($storyId: ID!) {
+        addToBookmarks(storyId: $storyId) {
+            _id
+            username
+            authorInfo {
+                createdStories
+            }
+            readerInfo {
+                purchasedStories
+                bookmarkedStories {
+                    storyId
+                    rating
+                }
+                toBeReadStories
+            }
+        }
+    }
+`;
+
+export const ADD_REVIEW = gql`
+    mutation addReview($reviewInput: ReviewInput!) {
+        addReview(input: $reviewInput) {
+            _id
+            username
+            rating
+            reviewText
+            createdAtFormattedDate
         }
     }
 `;

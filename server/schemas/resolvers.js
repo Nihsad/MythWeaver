@@ -11,30 +11,16 @@ const resolvers = {
             throw AuthenticationError;
         },
 
-        // Currently working with this query to try to get the username for the author field without any errors.
         stories: async () => {
-            const stories = await Story.find()
-                .populate({
-                    path: 'author',
-                    populate: {
-                        path: 'username',
-                        model: 'User',
-                    },
-                });
-            
-            // return stories.map(story => {
-            //     story.author = story.author.username;
-            //     return story;
-            // });
 
-            console.log(stories);
+            const stories = await Story.find().sort('-createdAt').limit(6);
 
             return stories;
         },
 
-        story: async (parent, { _id }) => {
+        story: async (parent, { storyId }) => {
             try {
-                const story = await Story.findById(_id)
+                const story = await Story.findOne({ _id: storyId })
                     .populate({
                         path: 'reviews',
                         populate: {
@@ -79,28 +65,30 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        addStory: async (parent, { title, author, description, imageUrl, price, steps }, context) => {
+        addStory: async (parent, { input }, context) => {
             try {
 
                 if (!context.user) {
                     throw AuthenticationError;
                 }
 
-                console.log({ title, author, description, imageUrl, price, steps });
+                console.log(input);
 
                 const stepIds = [];
 
-                for (step of steps) {
+                for (const step of input.steps) {
                     const newStep = await Step.create(step);
                     stepIds.push(newStep._id);
                 }
 
                 const story = await Story.create({
-                    title,
-                    author,
-                    description,
-                    imageUrl,
-                    price,
+                    title: input.title,
+                    author: input.author,
+                    description: input.description,
+                    imageUrl: input.imageUrl,
+                    price: input.price,
+                    genre: input.genre, 
+                    tags: input.tags,
                     steps: stepIds
                 });
 
@@ -125,6 +113,68 @@ const resolvers = {
                 console.error(err);
                 throw new Error('There was an error when attempting to add a new story.');
             }
+        },
+
+        addToTBR: async (parent, { storyId }, context) => {
+            if (!context.user) {
+                throw AuthenticationError;
+            }
+
+            try {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { 'readerInfo.toBeReadStories': storyId } },
+                    { new: true }
+                );
+
+                return updatedUser;
+
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+
+        addToBookmarks: async (parent, { storyId }, context) => {
+            if (!context.user) {
+                throw AuthenticationError;
+            }
+
+            try {
+                const updatedUser = await User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $addToSet: { 'readerInfo.bookmarkedStories': storyId } },
+                    { new: true }
+                );
+
+                return updatedUser;
+
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+
+        addReview: async (parent, { input }, context) => {
+            if (!context.user) {
+                throw AuthenticationError;
+            }
+
+            try {
+                const review = await Review.create({
+                    username: input.username,
+                    rating: input.rating,
+                    reviewText: input.reviewText,
+                });
+
+                const updatedStory = await Story.findOneAndUpdate(
+                    { _id: input.storyId },
+                    { $addToSet: { reviews: review._id } },
+                    { new: true }
+                );
+                return review;
+            } catch (err) {
+                throw new Error(err);
+            }
+
         },
     },
 };

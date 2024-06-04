@@ -6,16 +6,14 @@ const storySchema = new Schema(
             type: String,
             required: true,
         },
-        // Change this back when ready
+        // author: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'User',
+        // },
         author: {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
+            type: String, 
             required: true,
         },
-        // author: {
-        //     type: String, 
-        //     required: true,
-        // },
         description: {
             type: String,
             required: true,
@@ -28,6 +26,13 @@ const storySchema = new Schema(
             required: true,
             default: 0,
         },
+        genre: {
+            type: String,
+        }, 
+        tags: [{
+            type: String, 
+            default: [],
+        }],
         publishedDate: {
             type: Date,
             default: Date.now,
