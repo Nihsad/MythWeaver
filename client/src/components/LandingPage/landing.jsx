@@ -32,11 +32,6 @@ function Landing() {
           <img src={Map} alt="Map" className="map-image" />
         </div>
       </section>
-      <footer className="footer">
-        <div className="container">
-          <p>&copy; 2024 MythWeaver. All rights reserved.</p>
-        </div>
-      </footer>
     </div>
   );
 }
