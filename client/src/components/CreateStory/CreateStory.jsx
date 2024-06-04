@@ -623,56 +623,72 @@ import { ADD_STORY } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 function CreateStory() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isInitialModalOpen, setIsInitialModalOpen] = useState(true);
+    const [isChapterModalOpen, setIsChapterModalOpen] = useState(false);
+    const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
+
+    const [storyName, setStoryName] = useState('');
+    const [storyImage, setStoryImage] = useState('');
+    
     const [chapters, setChapters] = useState([]);
+    const [currentChapter, setCurrentChapter] = useState({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null }]});
     const [chapterIndexToEdit, setChapterIndexToEdit] = useState(null);
-    const [chapterTitle, setChapterTitle] = useState('');
-    const [chapterContent, setChapterContent] = useState('');
-    const [options, setOptions] = useState([{ choiceText: '', nextChapterIndex: null }]);
 
-    const openModal = () => {
-        setIsModalOpen(true);
+    const [optionToEditIndex, setOptionToEditIndex] = useState(null);
+
+    const handleStoryNameChange = (event) => {
+        setStoryName(event.target.value);
     };
 
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setChapterIndexToEdit(null);
-        setChapterTitle('');
-        setChapterContent('');
-        setOptions([{ choiceText: '', nextChapterIndex: null }]);
+    const handleStoryImageChange = (event) => {
+        setStoryImage(event.target.files[0]);
     };
 
-    const handleTitleChange = (event) => {
-        setChapterTitle(event.target.value);
-    };
-
-    const handleContentChange = (event) => {
-        setChapterContent(event.target.value);
+    const handleChapterChange = (field, value) => {
+        setCurrentChapter(prevState => ({
+            ...prevState,
+            [field]: value
+        }));
     };
 
     const handleOptionChange = (index, field, value) => {
-        const newOptions = [...options];
+        const newOptions = [...currentChapter.options];
         newOptions[index][field] = value;
-        setOptions(newOptions);
+        setCurrentChapter(prevState => ({
+            ...prevState,
+            options: newOptions
+        }));
     };
 
     const addOption = () => {
-        setOptions([...options, { choiceText: '', nextChapterIndex: null }]);
+        setCurrentChapter(prevState => ({
+            ...prevState,
+            options: [...prevState.options, { choiceText: '', nextChapterIndex: null }]
+        }));
     };
 
     const removeOption = (index) => {
-        const newOptions = [...options];
+        const newOptions = [...currentChapter.options];
         newOptions.splice(index, 1);
-        setOptions(newOptions);
+        setCurrentChapter(prevState => ({
+            ...prevState,
+            options: newOptions
+        }));
+    };
+
+    const handleInitialSubmit = (event) => {
+        event.preventDefault();
+        setIsInitialModalOpen(false);
+        setIsChapterModalOpen(true);
     };
 
     const handleChapterSubmit = (event) => {
         event.preventDefault();
-
+        
         const newChapter = {
-            title: chapterTitle,
-            content: chapterContent,
-            options: options
+            title: currentChapter.title,
+            content: currentChapter.content,
+            options: currentChapter.options
         };
 
         if (chapterIndexToEdit !== null) {
@@ -683,45 +699,45 @@ function CreateStory() {
             setChapters([...chapters, newChapter]);
         }
 
-        closeModal();
+        setCurrentChapter({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null }]});
+        setIsChapterModalOpen(false);
+        setChapterIndexToEdit(null);
     };
 
-    const editChapter = (index) => {
-        const chapterToEdit = chapters[index];
-        setChapterTitle(chapterToEdit.title);
-        setChapterContent(chapterToEdit.content);
-        setOptions(chapterToEdit.options);
-        setChapterIndexToEdit(index);
-        setIsModalOpen(true);
+    const handleOptionSubmit = (event) => {
+        event.preventDefault();
+        
+        const newChapter = {
+            title: currentChapter.title,
+            content: currentChapter.content,
+            options: currentChapter.options
+        };
+
+        const updatedChapters = [...chapters];
+        updatedChapters[optionToEditIndex] = newChapter;
+        setChapters(updatedChapters);
+
+        setCurrentChapter({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null }]});
+        setIsOptionModalOpen(false);
+        setOptionToEditIndex(null);
     };
 
     const addNewChapterForOption = (optionIndex) => {
-        const updatedOptions = [...options];
+        const updatedOptions = [...currentChapter.options];
         const newChapterIndex = chapters.length;
         updatedOptions[optionIndex].nextChapterIndex = newChapterIndex;
-        setOptions(updatedOptions);
-        setChapterIndexToEdit(null);
-        setChapterTitle('');
-        setChapterContent('');
-        setOptions([{ choiceText: '', nextChapterIndex: null }]);
-        openModal();
-    };
-
-    const assembleTestStory = () => {
-        let testStory = '';
-        chapters.forEach((chapter) => {
-            testStory += `${chapter.title}\n${chapter.content}\n`;
-            chapter.options.forEach((option, idx) => {
-                testStory += `${option.choiceText} -> Option ${idx + 1}\n`;
-            });
-        });
-        alert(testStory);
+        setCurrentChapter(prevState => ({
+            ...prevState,
+            options: updatedOptions
+        }));
+        setOptionToEditIndex(newChapterIndex);
+        setIsOptionModalOpen(true);
     };
 
     return (
         <div className="create-story-container">
             <div className="create-story-content">
-                <button onClick={openModal}>Add Chapter</button>
+                <button onClick={() => setIsInitialModalOpen(true)}>Create Story</button>
                 {chapters.map((chapter, index) => (
                     <div key={index}>
                         <button onClick={() => editChapter(index)}>
@@ -741,34 +757,64 @@ function CreateStory() {
                         </div>
                     </div>
                 ))}
-                <button onClick={assembleTestStory}>Test Story</button>
             </div>
-            <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
+
+            <Modal isOpen={isInitialModalOpen} onRequestClose={() => setIsInitialModalOpen(false)}>
+                <h2>Start Your Story</h2>
+                <form onSubmit={handleInitialSubmit}>
+                    <label htmlFor="storyName">Story Name:</label>
+                    <input type="text" id="storyName" value={storyName} onChange={handleStoryNameChange} required />
+                    <label htmlFor="storyImage">Story Image:</label>
+                    <input type="file" id="storyImage" onChange={handleStoryImageChange} required />
+                    <button type="submit">Next</button>
+                </form>
+            </Modal>
+
+            <Modal isOpen={isChapterModalOpen} onRequestClose={() => setIsChapterModalOpen(false)}>
                 <h2>{chapterIndexToEdit !== null ? 'Edit Chapter' : 'Add New Chapter'}</h2>
                 <form onSubmit={handleChapterSubmit}>
                     <label htmlFor="chapterTitle">Title:</label>
-                    <input type="text" id="chapterTitle" value={chapterTitle} onChange={handleTitleChange} />
+                    <input type="text" id="chapterTitle" value={currentChapter.title} onChange={(e) => handleChapterChange('title', e.target.value)} required />
                     <label htmlFor="chapterContent">Content:</label>
-                    <textarea id="chapterContent" value={chapterContent} onChange={handleContentChange} />
-                    {options.map((option, index) => (
+                    <textarea id="chapterContent" value={currentChapter.content} onChange={(e) => handleChapterChange('content', e.target.value)} required />
+                    {currentChapter.options.map((option, index) => (
                         <div key={index}>
                             <input
                                 type="text"
                                 value={option.choiceText}
                                 onChange={(e) => handleOptionChange(index, 'choiceText', e.target.value)}
                                 placeholder="Option Text"
-                            />
-                            <input
-                                type="number"
-                                value={option.nextChapterIndex}
-                                onChange={(e) => handleOptionChange(index, 'nextChapterIndex', parseInt(e.target.value))}
-                                placeholder="Next Chapter Index"
+                                required
                             />
                             <button type="button" onClick={() => removeOption(index)}>Remove Option</button>
                         </div>
                     ))}
                     <button type="button" onClick={addOption}>Add Option</button>
                     <button type="submit">{chapterIndexToEdit !== null ? 'Save Changes' : 'Save Chapter'}</button>
+                </form>
+            </Modal>
+
+            <Modal isOpen={isOptionModalOpen} onRequestClose={() => setIsOptionModalOpen(false)}>
+                <h2>Add New Chapter for Option</h2>
+                <form onSubmit={handleOptionSubmit}>
+                    <label htmlFor="chapterTitle">Title:</label>
+                    <input type="text" id="chapterTitle" value={currentChapter.title} onChange={(e) => handleChapterChange('title', e.target.value)} required />
+                    <label htmlFor="chapterContent">Content:</label>
+                    <textarea id="chapterContent" value={currentChapter.content} onChange={(e) => handleChapterChange('content', e.target.value)} required />
+                    {currentChapter.options.map((option, index) => (
+                        <div key={index}>
+                            <input
+                                type="text"
+                                value={option.choiceText}
+                                onChange={(e) => handleOptionChange(index, 'choiceText', e.target.value)}
+                                placeholder="Option Text"
+                                required
+                            />
+                            <button type="button" onClick={() => removeOption(index)}>Remove Option</button>
+                        </div>
+                    ))}
+                    <button type="button" onClick={addOption}>Add Option</button>
+                    <button type="submit">Save Chapter</button>
                 </form>
             </Modal>
         </div>
