@@ -95,3 +95,76 @@
 .story-8 {
     background-color: var(--story-8);
 }
+
+
+
+.modal-header-center .modal-title {
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    font-size: 2rem; 
+    color: #BD85B2; 
+}
+
+.modal-header-center .btn-close {
+    font-size: 2rem;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 2rem; 
+    height: 2rem; 
+    background-color: #c9084f; 
+    color: white; 
+    border: none; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    border-radius: 50%; 
+    opacity: 1; 
+}
+
+.modal-header-center .btn-close::before {
+    content: '×'; 
+    font-size: 1.5rem; 
+    color: white; 
+}
+
+.modal-title-lg {
+    font-size: 2rem;
+    color: #BD85B2; 
+}
+
+.modal-body-lg {
+    font-size: 1.2rem; 
+    line-height: 1.6;
+    padding: 2rem; 
+}
+
+.modal-body-lg form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; 
+}
+
+.modal-body-lg form .form-control {
+    font-size: 1.1rem; 
+    padding: 0.75rem; 
+}
+
+.modal-body-lg form .btn {
+    font-size: 1.1rem; 
+    padding: 0.75rem 1.5rem; 
+    background-color: #658068;
+    border-color: #658068; 
+    color: white; 
+}
+
+.modal-body-lg form .btn:hover {
+    background-color: #546b55;
+    border-color: #546b55; 
+}
+
+.modal-content {
+    background-color: #E4F5F5;
+    border: 10px solid #6f4c86; 
+}
