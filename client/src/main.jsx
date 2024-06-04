@@ -1,7 +1,10 @@
-import ReactDOM from 'react-dom/client';
+import ReactDOM from 'react-dom/client'; // Correct import for createRoot
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// import Tree from './components/Tree/index.jsx;'
+
 import App from './App.jsx';
 import Layout from './components/Layout/Layout.jsx';
+import NoHeaderLayout from './components/Layout/NoHeaderLayout.jsx'
 import MythIndex from './components/MythIndex/MythIndex.jsx';
 import UserProfile from './components/UserProfile/UserProfile.jsx';
 import StoryIndex from './components/StoryIndex/StoryIndex.jsx';
@@ -64,9 +67,9 @@ const router = createBrowserRouter([
             ],
           },
         ],
-    },
-]);
+      },
+    ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <RouterProvider router={router} />
-);
+)
