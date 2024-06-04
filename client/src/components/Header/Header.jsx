@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { GET_STORIES } from '../../utils/queries';
 import { Link, useLocation } from 'react-router-dom';
+import SignupForm from '../SignupForm/SignupForm';
+import LoginForm from '../LoginForm/LoginForm';
+import Auth from '../../utils/auth';
 import './Header.css';
+
+import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
 
 const Header = () => {
   const location = useLocation();
@@ -24,10 +31,10 @@ const Header = () => {
             <button className="header-button">Profile</button>
           </Link>
         </div>
-        <h1 className="title"><a href="/">MythWeaver</a></h1>
+        <h1 className="title"><a href="/myth-index">MythWeaver</a></h1>
         <div className="header-right">
           {/* MythIndex */}
-          {location.pathname === '/' && (
+          {location.pathname === '/myth-index' && (
             <>
               <Link to="/about-us" className="header-link">
                 <button className="header-button">About Us</button>
