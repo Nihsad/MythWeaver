@@ -8,9 +8,12 @@ import StoryIndex from './components/StoryIndex/StoryIndex.jsx';
 import StorySplash from './components/StorySplash/StorySplash.jsx';
 import CreateStory from './components/CreateStory/CreateStory.jsx';
 import AboutUs from './components/AboutUs/AboutUs.jsx';
-import Landing from './components/LandingPage/landing.jsx';
-import StoryPath from './components/StoryPath/StoryPath.jsx'; 
-import StoryEnd from './components/StoryEnd/StoryEnd.jsx'; 
+import StoryPath from './components/StoryPath/StoryPath.jsx';
+import StoryEnd from './components/StoryEnd/StoryEnd.jsx';
+import StoryReview from './components/StoryReview/StoryReview.jsx';
+import Landing from './components/LandingPage/landing.jsx'; 
+
+// import necessary pages here which will be rendered as elements in the children for react router
 
 const router = createBrowserRouter([
     {
@@ -18,40 +21,48 @@ const router = createBrowserRouter([
         element: <App />,
         errorElement: <h1 className='display-2'>Wrong page!</h1>,
         children: [
-            {
-                path: '/',
-                element: <Layout />,
-                children: [
-                    {
-                        index: true,
-                        element: <Landing />
-                    }, {
-                        path: '/myth-index',
-                        element: <MythIndex />
-                    }, {
-                        path: '/user-profile',
-                        element: <UserProfile />
-                    }, {
-                        path: '/story-index',
-                        element: <StoryIndex />
-                    }, {
-                        path: '/story-splash',
-                        element: <StorySplash />
-                    }, {
-                        path: '/create-story',
-                        element: <CreateStory />
-                    }, {
-                        path: '/about-us',
-                        element: <AboutUs />
-                    }, {
-                        path: '/story-path', 
-                        element: <StoryPath />
-                    }, {
-                        path: '/story-end', 
-                        element: <StoryEnd />
-                    }
-                ],
-            },
+          {
+            element: <Layout />,
+            children: [
+              {
+                path: 'myth-index',
+                element: <MythIndex />
+              }, {
+                path: 'user-profile',
+                element: <UserProfile />
+              }, {
+                path: 'story-index',
+                element: <StoryIndex />
+              }, {
+                path: 'story-splash',
+                element: <StorySplash />
+              }, {
+                path: 'create-story',
+                element: <CreateStory />
+              }, {
+                path: 'about-us',
+                element: <AboutUs />
+              }, {
+                path: 'story-path',
+                element: <StoryPath />
+              }, {
+                path: 'story-end',
+                element: <StoryEnd />
+              }, {
+                path: 'story-review',
+                element: <StoryReview />
+              }
+            ],
+          },
+          {
+            element: <NoHeaderLayout />,
+            children: [
+              {
+                index: true,
+                element: <Landing />
+              }
+            ],
+          },
         ],
     },
 ]);
