@@ -89,44 +89,34 @@ const router = createBrowserRouter([
         element: <App />,
         errorElement: <h1 className='display-2'>Wrong page!</h1>,
         children: [
-            {
-                path: '/',
-                element: <Layout />,
-                children: [
-                    {
-                        index: true,
-                        element: <Landing />,
-                    },
-                    {
-                        path: 'myth-index',
-                        element: <MythIndex />,
-                    },
-                    {
-                        path: 'user-profile',
-                        element: <UserProfile />,
-                    },
-                    {
-                        path: 'story-index',
-                        element: <StoryIndex />,
-                    },
-                    {
-                        path: 'story-splash',
-                        element: <StorySplash />,
-                    },
-                    {
-                        path: 'create-story',
-                        element: <CreateStory />,
-                    },
-                    {
-                        path: 'about-us',
-                        element: <AboutUs />,
-                    },
-                    {
-                        path: 'test-story',
-                        element: <TestStory />, // Adding TestStory component route
-                    },
-                ],
-            },
+          {
+            path: '/',
+            element: <Layout />,
+            children: [
+              {
+                index: true,
+                element: <Landing /> 
+            }, {
+                path: '/myth-index',
+                element: <MythIndex />
+            }, {
+                path: '/user-profile',
+                element: <UserProfile />
+            }, {
+                path: '/story-index',
+                element: <StoryIndex />
+            }, {
+                path: '/story-splash',
+                element: <StorySplash />
+            }, {
+                path: '/create-story',
+                element: <CreateStory />
+            }, {
+                path: '/about-us',
+                element: <AboutUs />
+            }
+            ],
+          },
         ],
     },
 ]);
