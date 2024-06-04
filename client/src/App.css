@@ -3,16 +3,17 @@
 * {
   box-sizing: border-box;
   margin: 0;
-  font-family: var(--display-font);
+  font-family: var(--theme-font);
 }
 
 /* Default (fairycore) theme */
 :root {
   font-size: 16px; /* set default for rem */
   --border-radius: 10px;
-  --display-font: 'Chewy', cursive, sans-serif;
+  --theme-font: 'Chewy', cursive, sans-serif;
+  --header-height: 175px;
 
-   /* COLORS */
+  /* COLORS */
   --bg-color: rgb(211, 201, 198); /* #d3c9c6 */
   --text-color: rgb(100, 91, 89); /* #645b59 */
   --container-color: rgb(216, 184, 153); /* #d8b899 */ 
@@ -21,8 +22,8 @@
   --mid-dark-accent: rgb(132, 125, 124); /* #847d7c */
   --button-accent: rgb(176, 86, 93); /* #b0565d */
   --dk-button-accent: rgb(155, 63, 78); /* #9b3f4e */
- --dk-container-color: rgb(232, 157, 117); /* #e89d75 */
- --rating-bg: rgb(177, 202, 203); /* #b1cacb */
+  --dk-container-color: rgb(232, 157, 117); /* #e89d75 */
+  --rating-bg: rgb(177, 202, 203); /* #b1cacb */
 
   /* HEADER VARIABLES */
   --header-bg: rgb(216, 184, 153); /* #d8b899 */
@@ -42,7 +43,7 @@
   --story-8: rgb(237, 176, 139); /* #edb08b */
 }
   
-  /* Dark theme */
+/* Dark theme */
 [data-theme="cyberpunk"] {
   --bg-color: #333333;
   --text-color: #ffffff;
