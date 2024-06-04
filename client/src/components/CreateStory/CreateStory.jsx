@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import './CreateStory.css';
 
+Modal.setAppElement('#root');
+
 function CreateStory() {
     const [isInitialModalOpen, setIsInitialModalOpen] = useState(false);
     const [isChapterModalOpen, setIsChapterModalOpen] = useState(false);
     const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
+    const [hasStartedStory, setHasStartedStory] = useState(false);
 
     const [storyName, setStoryName] = useState('');
     const [storyImage, setStoryImage] = useState('');
@@ -81,6 +84,7 @@ function CreateStory() {
         event.preventDefault();
         setIsInitialModalOpen(false);
         setIsChapterModalOpen(true);
+        setHasStartedStory(true);
     };
 
     const handleChapterSubmit = (event) => {
@@ -191,12 +195,19 @@ function CreateStory() {
     return (
         <div className="create-story-container">
             <div className="create-story-content">
-                <button onClick={() => setIsInitialModalOpen(true)}>Create Story</button>
+                {!hasStartedStory && (
+                    <button onClick={() => setIsInitialModalOpen(true)}>Create Story</button>
+                )}
                 {chapters.length > 0 && renderChapters(0)}
                 {chapters.length > 0 && <button onClick={finalizeStory}>Finalize Story</button>}
             </div>
 
-            <Modal isOpen={isInitialModalOpen} onRequestClose={() => setIsInitialModalOpen(false)}>
+            <Modal
+                isOpen={isInitialModalOpen}
+                onRequestClose={() => setIsInitialModalOpen(false)}
+                className="modal"
+                overlayClassName="overlay"
+            >
                 <h2>Start Your Story</h2>
                 <form onSubmit={handleInitialSubmit}>
                     <label htmlFor="storyName">Story Name:</label>
@@ -213,7 +224,12 @@ function CreateStory() {
                 </form>
             </Modal>
 
-            <Modal isOpen={isChapterModalOpen} onRequestClose={() => setIsChapterModalOpen(false)}>
+            <Modal
+                isOpen={isChapterModalOpen}
+                onRequestClose={() => setIsChapterModalOpen(false)}
+                className="modal"
+                overlayClassName="overlay"
+            >
                 <h2>{chapterIndexToEdit !== null ? 'Edit Chapter' : 'Add New Chapter'}</h2>
                 <form onSubmit={handleChapterSubmit}>
                     <label htmlFor="chapterTitle">Title:</label>
@@ -245,8 +261,13 @@ function CreateStory() {
                 </form>
             </Modal>
 
-            <Modal isOpen={isOptionModalOpen} onRequestClose={() => setIsOptionModalOpen(false)}>
-                <h2>Add New Chapter for the Chosen Option</h2>
+            <Modal
+                isOpen={isOptionModalOpen}
+                onRequestClose={() => setIsOptionModalOpen(false)}
+                className="modal"
+                overlayClassName="overlay"
+            >
+                <h2>Add New Chapter for Option</h2>
                 <form onSubmit={handleOptionSubmit}>
                     <label htmlFor="chapterTitle">Title:</label>
                     <input type="text" id="chapterTitle" value={currentChapter.title} onChange={(e) => handleChapterChange('title', e.target.value)} required />
@@ -281,3 +302,4 @@ function CreateStory() {
 }
 
 export default CreateStory;
+
