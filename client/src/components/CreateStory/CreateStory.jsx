@@ -480,147 +480,10 @@
 
 // export default CreateStory;
 
-
-// ----------------------------------------------------------
-
-// import React, { useState } from 'react';
-// import Modal from 'react-modal';
-// import './CreateStory.css';
-// import { useMutation } from '@apollo/client';
-// import { ADD_STORY } from '../../utils/mutations';
-// import Auth from '../../utils/auth';
-
-// function CreateStory() {
-//     const [isModalOpen, setIsModalOpen] = useState(false);
-//     const [chapters, setChapters] = useState([]);
-//     const [chapterIndexToEdit, setChapterIndexToEdit] = useState(null);
-//     const [chapterTitle, setChapterTitle] = useState('');
-//     const [chapterContent, setChapterContent] = useState('');
-//     const [options, setOptions] = useState([{ choiceText: '', nextChapterIndex: null }]);
-
-//     const openModal = () => {
-//         setIsModalOpen(true);
-//     };
-
-//     const closeModal = () => {
-//         setIsModalOpen(false);
-//         setChapterIndexToEdit(null); // Reset chapter index after closing the modal
-//     };
-
-//     const handleTitleChange = (event) => {
-//         setChapterTitle(event.target.value);
-//     };
-
-//     const handleContentChange = (event) => {
-//         setChapterContent(event.target.value);
-//     };
-
-//     const handleOptionChange = (index, field, value) => {
-//         const newOptions = [...options];
-//         newOptions[index][field] = value;
-//         setOptions(newOptions);
-//     };
-
-//     const addOption = () => {
-//         setOptions([...options, { choiceText: '', nextChapterIndex: null }]);
-//     };
-
-//     const removeOption = (index) => {
-//         const newOptions = [...options];
-//         newOptions.splice(index, 1);
-//         setOptions(newOptions);
-//     };
-
-//     const handleChapterSubmit = () => {
-//         const newChapter = {
-//             title: chapterTitle,
-//             content: chapterContent
-//         };
-
-//         // If editing existing chapter
-//         if (chapterIndexToEdit !== null) {
-//             const updatedChapters = [...chapters];
-//             updatedChapters[chapterIndexToEdit] = newChapter;
-//             setChapters(updatedChapters);
-//         } else {
-//             // Adding new chapter
-//             setChapters([...chapters, newChapter]);
-//         }
-
-//         closeModal();
-//     };
-
-//     const editChapter = (index) => {
-//         setChapterTitle(chapters[index].title);
-//         setChapterContent(chapters[index].content);
-//         setChapterIndexToEdit(index);
-//         setIsModalOpen(true);
-//     };
-
-//     const assembleTestStory = () => {
-//         let testStory = '';
-//         chapters.forEach((chapter) => {
-//             testStory += `${chapter.title}\n${chapter.content}\n`;
-//         });
-//         alert(testStory);
-//     };
-
-//     return (
-//         <div className="create-story-container">
-//             <div className="create-story-content">
-//                 <button onClick={openModal}>Add Chapter</button>
-//                 {chapters.map((chapter, index) => (
-//                     <div key={index}>
-//                         <button onClick={() => editChapter(index)}>
-//                             {chapter.title}
-//                         </button>
-//                     </div>
-//                 ))}
-//                 <button onClick={assembleTestStory}>Test Story</button>
-//             </div>
-//             <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
-//                 <h2>{chapterIndexToEdit !== null ? 'Edit Chapter' : 'Add New Chapter'}</h2>
-//                 <form onSubmit={handleChapterSubmit}>
-//                     <label htmlFor="chapterTitle">Title:</label>
-//                     <input type="text" id="chapterTitle" value={chapterTitle} onChange={handleTitleChange} />
-//                     <label htmlFor="chapterContent">Content:</label>
-//                     <textarea id="chapterContent" value={chapterContent} onChange={handleContentChange} />
-//                     {options.map((option, index) => (
-//                         <div key={index}>
-//                             <input
-//                                 type="text"
-//                                 value={option.choiceText}
-//                                 onChange={(e) => handleOptionChange(index, 'choiceText', e.target.value)}
-//                                 placeholder="Option Text"
-//                             />
-//                             <input
-//                                 type="number"
-//                                 value={option.nextChapterIndex}
-//                                 onChange={(e) => handleOptionChange(index, 'nextChapterIndex', parseInt(e.target.value))}
-//                                 placeholder="Next Chapter Index"
-//                             />
-//                             <button type="button" onClick={() => removeOption(index)}>Remove Option</button>
-//                         </div>
-//                     ))}
-//                     <button type="button" onClick={addOption}>Add Option</button>
-//                     <button type="submit">{chapterIndexToEdit !== null ? 'Save Changes' : 'Save Chapter'}</button>
-//                 </form>
-//             </Modal>
-//         </div>
-//     );
-// }
-
-// export default CreateStory;
-
-
-// -------------------------------------------------------------
-
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import './CreateStory.css';
-import { useMutation } from '@apollo/client';
-import { ADD_STORY } from '../../utils/mutations';
-import Auth from '../../utils/auth';
 
 function CreateStory() {
     const [isInitialModalOpen, setIsInitialModalOpen] = useState(true);
@@ -629,19 +492,25 @@ function CreateStory() {
 
     const [storyName, setStoryName] = useState('');
     const [storyImage, setStoryImage] = useState('');
+    const [storyDescription, setStoryDescription] = useState('');
     
     const [chapters, setChapters] = useState([]);
-    const [currentChapter, setCurrentChapter] = useState({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null }]});
+    const [currentChapter, setCurrentChapter] = useState({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null, isEnd: false }]});
     const [chapterIndexToEdit, setChapterIndexToEdit] = useState(null);
+    const [currentOptionIndex, setCurrentOptionIndex] = useState(null);
 
-    const [optionToEditIndex, setOptionToEditIndex] = useState(null);
+    const navigate = useNavigate();
 
     const handleStoryNameChange = (event) => {
         setStoryName(event.target.value);
     };
 
     const handleStoryImageChange = (event) => {
-        setStoryImage(event.target.files[0]);
+        setStoryImage(URL.createObjectURL(event.target.files[0]));
+    };
+
+    const handleStoryDescriptionChange = (event) => {
+        setStoryDescription(event.target.value);
     };
 
     const handleChapterChange = (field, value) => {
@@ -663,7 +532,7 @@ function CreateStory() {
     const addOption = () => {
         setCurrentChapter(prevState => ({
             ...prevState,
-            options: [...prevState.options, { choiceText: '', nextChapterIndex: null }]
+            options: [...prevState.options, { choiceText: '', nextChapterIndex: null, isEnd: false }]
         }));
     };
 
@@ -699,14 +568,14 @@ function CreateStory() {
             setChapters([...chapters, newChapter]);
         }
 
-        setCurrentChapter({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null }]});
+        setCurrentChapter({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null, isEnd: false }]});
         setIsChapterModalOpen(false);
         setChapterIndexToEdit(null);
     };
 
     const handleOptionSubmit = (event) => {
         event.preventDefault();
-        
+
         const newChapter = {
             title: currentChapter.title,
             content: currentChapter.content,
@@ -714,49 +583,76 @@ function CreateStory() {
         };
 
         const updatedChapters = [...chapters];
-        updatedChapters[optionToEditIndex] = newChapter;
+        updatedChapters[chapters.length] = newChapter;
+
+        const parentChapterIndex = currentOptionIndex.parentChapterIndex;
+        const parentOptionIndex = currentOptionIndex.parentOptionIndex;
+
+        updatedChapters[parentChapterIndex].options[parentOptionIndex].nextChapterIndex = chapters.length;
+
         setChapters(updatedChapters);
 
-        setCurrentChapter({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null }]});
+        setCurrentChapter({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null, isEnd: false }]});
         setIsOptionModalOpen(false);
-        setOptionToEditIndex(null);
+        setCurrentOptionIndex(null);
     };
 
-    const addNewChapterForOption = (optionIndex) => {
-        const updatedOptions = [...currentChapter.options];
-        const newChapterIndex = chapters.length;
-        updatedOptions[optionIndex].nextChapterIndex = newChapterIndex;
-        setCurrentChapter(prevState => ({
-            ...prevState,
-            options: updatedOptions
-        }));
-        setOptionToEditIndex(newChapterIndex);
+    const addNewChapterForOption = (parentChapterIndex, parentOptionIndex) => {
+        setCurrentOptionIndex({parentChapterIndex, parentOptionIndex});
+        setCurrentChapter({title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null, isEnd: false }]});
         setIsOptionModalOpen(true);
+    };
+
+    const editChapter = (index) => {
+        const chapterToEdit = chapters[index];
+        setCurrentChapter({
+            title: chapterToEdit.title,
+            content: chapterToEdit.content,
+            options: chapterToEdit.options
+        });
+        setChapterIndexToEdit(index);
+        setIsChapterModalOpen(true);
+    };
+
+    const finalizeStory = () => {
+        navigate('/story-index', { state: { storyName, storyImage, storyDescription, chapters } });
+    };
+
+    const renderChapters = (chapterIndex, depth = 0) => {
+        const chapter = chapters[chapterIndex];
+        if (!chapter) return null;
+
+        return (
+            <div key={chapterIndex} style={{ marginLeft: depth * 20 }}>
+                <button onClick={() => editChapter(chapterIndex)}>
+                    {chapter.title}
+                </button>
+                <div>
+                    {chapter.options.map((option, optionIndex) => (
+                        <div key={optionIndex}>
+                            <button onClick={() => addNewChapterForOption(chapterIndex, optionIndex)}>
+                                {option.choiceText || `Option ${optionIndex + 1}`}
+                            </button>
+                            {option.isEnd && <span> (End)</span>}
+                            {option.nextChapterIndex !== null && (
+                                <span>
+                                    {` -> Chapter ${option.nextChapterIndex + 1}`}
+                                    {renderChapters(option.nextChapterIndex, depth + 1)}
+                                </span>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
     };
 
     return (
         <div className="create-story-container">
             <div className="create-story-content">
                 <button onClick={() => setIsInitialModalOpen(true)}>Create Story</button>
-                {chapters.map((chapter, index) => (
-                    <div key={index}>
-                        <button onClick={() => editChapter(index)}>
-                            {chapter.title}
-                        </button>
-                        <div>
-                            {chapter.options.map((option, optionIndex) => (
-                                <div key={optionIndex}>
-                                    <button onClick={() => addNewChapterForOption(optionIndex)}>
-                                        {`Option ${optionIndex + 1}`}
-                                    </button>
-                                    {option.nextChapterIndex !== null && (
-                                        <span> -> Chapter {option.nextChapterIndex}</span>
-                                    )}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                ))}
+                {chapters.length > 0 && renderChapters(0)}
+                {chapters.length > 0 && <button onClick={finalizeStory}>Finalize Story</button>}
             </div>
 
             <Modal isOpen={isInitialModalOpen} onRequestClose={() => setIsInitialModalOpen(false)}>
@@ -766,6 +662,8 @@ function CreateStory() {
                     <input type="text" id="storyName" value={storyName} onChange={handleStoryNameChange} required />
                     <label htmlFor="storyImage">Story Image:</label>
                     <input type="file" id="storyImage" onChange={handleStoryImageChange} required />
+                    <label htmlFor="storyDescription">Brief Description:</label>
+                    <textarea id="storyDescription" value={storyDescription} onChange={handleStoryDescriptionChange} required />
                     <button type="submit">Next</button>
                 </form>
             </Modal>
@@ -786,6 +684,14 @@ function CreateStory() {
                                 placeholder="Option Text"
                                 required
                             />
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={option.isEnd}
+                                    onChange={(e) => handleOptionChange(index, 'isEnd', e.target.checked)}
+                                />
+                                Ends Story
+                            </label>
                             <button type="button" onClick={() => removeOption(index)}>Remove Option</button>
                         </div>
                     ))}
@@ -810,6 +716,14 @@ function CreateStory() {
                                 placeholder="Option Text"
                                 required
                             />
+                            <label>
+                                <input
+                                    type="checkbox"
+                                    checked={option.isEnd}
+                                    onChange={(e) => handleOptionChange(index, 'isEnd', e.target.checked)}
+                                />
+                                Ends Story
+                            </label>
                             <button type="button" onClick={() => removeOption(index)}>Remove Option</button>
                         </div>
                     ))}
