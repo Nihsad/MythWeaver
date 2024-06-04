@@ -13,6 +13,7 @@ import CreateStory from './components/CreateStory/CreateStory.jsx';
 import AboutUs from './components/AboutUs/AboutUs.jsx';
 import StoryPath from './components/StoryPath/StoryPath.jsx';
 import StoryEnd from './components/StoryEnd/StoryEnd.jsx';
+import StoryReview from './components/StoryReview/StoryReview.jsx';
 import Landing from './components/LandingPage/landing.jsx'; 
 
 // import necessary pages here which will be rendered as elements in the children for react router
@@ -50,6 +51,9 @@ const router = createBrowserRouter([
               }, {
                 path: 'story-end',
                 element: <StoryEnd />
+              }, {
+                path: 'story-review',
+                element: <StoryReview />
               }
             ],
           },
