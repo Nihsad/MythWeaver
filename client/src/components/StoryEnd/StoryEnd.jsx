@@ -5,10 +5,10 @@ import './StoryEnd.css';
 const StoryEnd = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { storyName, storyImage, storyDescription, chapters } = location.state || {};
+    const { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } = location.state || {};
 
     const goBackToStoryIndex = () => {
-        navigate('/story-index', { state: { storyName, storyImage, storyDescription, chapters } });
+        navigate('/story-index', { state: { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } });
     };
 
     return (

@@ -30,8 +30,6 @@
 // };
 
 // export default StoryIndex;
-
-
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './StoryIndex.css';
@@ -39,15 +37,18 @@ import './StoryIndex.css';
 const StoryIndex = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { storyName, storyImage, storyDescription, chapters } = location.state || {};
+    const { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } = location.state || {};
 
     const startStory = () => {
-        navigate('/story-path', { state: { storyName, chapters } });
+        navigate('/story-path', { state: { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } });
     };
 
     if (!storyName || !chapters) {
         return <div>No story data available. Please create a story first.</div>;
     }
+
+    // Split the tags by comma and trim whitespace
+    const tagsArray = storyTags ? storyTags.split(',').map(tag => tag.trim()) : [];
 
     return (
         <div className="story-index">
@@ -63,9 +64,10 @@ const StoryIndex = () => {
                     <span className="star">&#9733;</span>
                 </div>
                 <div className="genre-tags-links">
-                    <div>Genre of Story</div>
-                    <div>Tags</div>
-                    <div>Links</div>
+                    <div>Genre: {storyGenre}</div>
+                    <div>Tags: {tagsArray.map((tag, index) => (
+                        <span key={index} className="tag">{tag}</span>
+                    ))}</div>
                 </div>
                 <div className="story-description">
                     <h2>Brief Description of Story:</h2>

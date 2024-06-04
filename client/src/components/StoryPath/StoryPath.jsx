@@ -23,7 +23,6 @@
 
 // export default StoryPath;
 
-
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './StoryPath.css';
@@ -31,14 +30,14 @@ import './StoryPath.css';
 const StoryPath = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const { storyName, chapters, storyImage, storyDescription } = location.state || {};
+    const { storyName, chapters, storyImage, storyDescription, storyGenre, storyTags } = location.state || {};
     const [currentChapterIndex, setCurrentChapterIndex] = useState(0);
 
     const currentChapter = chapters[currentChapterIndex];
 
     const handleOptionClick = (option) => {
         if (option.isEnd) {
-            navigate('/story-end', { state: { storyName, storyImage, storyDescription, chapters } });
+            navigate('/story-end', { state: { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } });
         } else {
             setCurrentChapterIndex(option.nextChapterIndex);
         }
@@ -62,4 +61,3 @@ const StoryPath = () => {
 };
 
 export default StoryPath;
-
