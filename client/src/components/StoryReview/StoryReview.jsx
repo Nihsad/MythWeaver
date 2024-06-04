@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import './StoryReview.css';
+import { useMutation } from '@apollo/client';
+import { ADD_REVIEW, ADD_TO_BOOKMARKS } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 const StoryReview = () => {
     const [reviewText, setReviewText] = useState('');
@@ -7,19 +11,63 @@ const StoryReview = () => {
     const [hoveredStar, setHoveredStar] = useState(0);
     const [reviews, setReviews] = useState([]);
     const [username, setUsername] = useState('');
+    // const [addReview, { error }] = useMutation(ADD_REVIEW);
+    // const [addToBookmarks, { error }] = useMutation(ADD_TO_BOOKMARKS);
 
-    const handleSaveReview = () => {
-        const newReview = {
-            username: username,
-            date: new Date().toLocaleDateString(),
-            starRating: starRating,
-            reviewText: reviewText,
-        };
-        setReviews([newReview, ...reviews].slice(0, 5));
-        setReviewText('');
-        setStarRating(0);
-        setUsername('');
-    };
+    // Under construction beep beep. Not sure how to get the storyId which we'll need to provide in the reviewInput variable. 
+    // const handleSaveReview = async () => {
+    //     const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    //     if (!token) {
+    //         return false;
+    //     }
+            
+    //     const { storyId } = useParams();
+
+    //     try {
+    //         const profile = await Auth.getProfile();
+    //         const reviewInput = {
+    //             storyId,
+    //             profile.username,
+    //             rating: starRating,
+    //             reviewText
+    //         }
+
+    //         const reviewData = await addReview({
+    //             variables: { reviewInput }
+    //         })
+
+    //         console.log(reviewData);
+    //     } catch (err) {
+    //         console.error(err);
+    //         throw new Error(err);
+    //     }
+
+    //     setReviews([newReview, ...reviews].slice(0, 5));
+    //     setReviewText('');
+    //     setStarRating(0);
+    //     setUsername('');
+    // };
+    
+    // Same issue here, not totally sure how we'll get the storyId yet. 
+    const handleAddToBookmarks = async () => {
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            const profile = await Auth.getProfile();
+            const userData = await addToBookmarks({
+                variables: { storyId }
+            })
+            console.log(userData);
+        } catch (err) {
+            console.error(err);
+            throw new Error(err);
+        }
+    }
     
 // Star Rating clicky nonsense
     const handleStarClick = (rating) => {
@@ -66,8 +114,12 @@ const StoryReview = () => {
                     ))}
                 </div>
                 <div className="review-buttons">
-                    <button onClick={handleSaveReview} className="save-button">Save Review</button>
-                    <button className="save-button">Bookmark Story</button>
+                    <button
+                        // onClick={handleSaveReview}
+                        className="save-button">Save Review</button>
+                    <button className="save-button"
+                        // onClick={handleAddToBookmarks}
+                    >Bookmark Story</button>
                 </div>
 
                 <h2>Recent Reviews</h2>
