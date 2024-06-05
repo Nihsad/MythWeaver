@@ -118,6 +118,60 @@
 }
 
 /* Show dropdown when button is clicked */
-.dropdown-content {
+/* .dropdown-content {
   display: ${dropdownOpen ? 'block' : 'none'};
+} */
+
+
+/* MythIndex.css and Header.css */
+
+.modal-header-center .modal-title {
+  margin: 0 auto;
+  text-align: center;
+  width: 100%;
+  font-size: 2rem; /* Increase the font size of the title */
+  color: #BD85B2; /* Apply the hex color to the title */
+}
+
+.modal-header-center .btn-close {
+  font-size: 2rem; /* Increase the font size of the close button */
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 2rem; /* Increase width */
+  height: 2rem; /* Increase height */
+  color: #A94E6F; /* Apply the hex color to the close button */
+  opacity: 1; /* Ensure the close button is fully opaque */
+}
+
+.modal-header-center .btn-close::before {
+  content: '×'; /* Display an 'X' */
+  font-size: 2rem; /* Make sure the 'X' is large enough */
+}
+
+.modal-title-lg {
+  font-size: 2rem; /* Increase the font size of the title */
+  color: #BD85B2; /* Apply the hex color to the title */
+}
+
+.modal-body-lg {
+  font-size: 1.2rem; /* Increase the font size of the modal body text */
+  line-height: 1.6; /* Increase the line height for better readability */
+  padding: 2rem; /* Add more padding for better spacing */
+}
+
+.modal-body-lg form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Add gap between form elements */
+}
+
+.modal-body-lg form .form-control {
+  font-size: 1.1rem; /* Increase the font size of form inputs */
+  padding: 0.75rem; /* Increase padding for form inputs */
+}
+
+.modal-body-lg form .btn {
+  font-size: 1.1rem; /* Increase the font size of buttons */
+  padding: 0.75rem 1.5rem; /* Increase padding for buttons */
 }
