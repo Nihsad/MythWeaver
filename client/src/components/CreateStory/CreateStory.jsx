@@ -1,95 +1,108 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Modal from 'react-modal';
-import './CreateStory.css';
+import React, { useState } from 'react'; 
+import { useNavigate } from 'react-router-dom'; 
+import Modal from 'react-modal'; 
+import './CreateStory.css'; 
+
 
 Modal.setAppElement('#root');
 
+// Define the CreateStory component
 function CreateStory() {
+    // State variables for managing the visibility of various modals
     const [isInitialModalOpen, setIsInitialModalOpen] = useState(false);
     const [isChapterModalOpen, setIsChapterModalOpen] = useState(false);
     const [isOptionModalOpen, setIsOptionModalOpen] = useState(false);
     const [hasStartedStory, setHasStartedStory] = useState(false);
 
+    // State variables for storing story metadata
     const [storyName, setStoryName] = useState('');
     const [storyImage, setStoryImage] = useState('');
     const [storyDescription, setStoryDescription] = useState('');
     const [storyGenre, setStoryGenre] = useState('');
     const [storyTags, setStoryTags] = useState('');
 
+    // State variables for managing chapters and options within the story
     const [chapters, setChapters] = useState([]);
     const [currentChapter, setCurrentChapter] = useState({ title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null, isEnd: false }] });
     const [chapterIndexToEdit, setChapterIndexToEdit] = useState(null);
     const [currentOptionIndex, setCurrentOptionIndex] = useState(null);
 
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
 
+    // Handlers for changing story metadata
     const handleStoryNameChange = (event) => {
-        setStoryName(event.target.value);
+        setStoryName(event.target.value); // Update story name
     };
 
     const handleStoryImageChange = (event) => {
-        setStoryImage(URL.createObjectURL(event.target.files[0]));
+        setStoryImage(URL.createObjectURL(event.target.files[0])); // Update story image with a file URL
     };
 
     const handleStoryDescriptionChange = (event) => {
-        setStoryDescription(event.target.value);
+        setStoryDescription(event.target.value); // Update story description
     };
 
     const handleStoryGenreChange = (event) => {
-        setStoryGenre(event.target.value);
+        setStoryGenre(event.target.value); // Update story genre
     };
 
     const handleStoryTagsChange = (event) => {
-        setStoryTags(event.target.value);
+        setStoryTags(event.target.value); // Update story tags
     };
 
+    // Handler for changing chapter fields
     const handleChapterChange = (field, value) => {
         setCurrentChapter(prevState => ({
             ...prevState,
-            [field]: value
+            [field]: value // Update the specified field of the current chapter
         }));
     };
 
+    // Handler for changing option fields
     const handleOptionChange = (index, field, value) => {
         const newOptions = [...currentChapter.options];
-        newOptions[index][field] = value;
+        newOptions[index][field] = value; // Update the specified field of the specified option
         setCurrentChapter(prevState => ({
             ...prevState,
-            options: newOptions
+            options: newOptions // Update options array in the current chapter
         }));
     };
 
+    // Function to add a new option to the current chapter
     const addOption = () => {
         if (currentChapter.options.length < 3) {
             setCurrentChapter(prevState => ({
                 ...prevState,
-                options: [...prevState.options, { choiceText: '', nextChapterIndex: null, isEnd: false }]
+                options: [...prevState.options, { choiceText: '', nextChapterIndex: null, isEnd: false }] 
             }));
         } else {
-            alert("You can only add up to three options.");
+            alert("You can only add up to three options."); 
         }
     };
 
+    // Function to remove an option from the current chapter
     const removeOption = (index) => {
         const newOptions = [...currentChapter.options];
-        newOptions.splice(index, 1);
+        newOptions.splice(index, 1); // Remove the specified option
         setCurrentChapter(prevState => ({
             ...prevState,
-            options: newOptions
+            options: newOptions 
         }));
     };
 
+    // Handler for submitting initial story details
     const handleInitialSubmit = (event) => {
-        event.preventDefault();
-        setIsInitialModalOpen(false);
-        setIsChapterModalOpen(true);
-        setHasStartedStory(true);
+        event.preventDefault(); 
+        setIsInitialModalOpen(false); 
+        setIsChapterModalOpen(true); 
+        setHasStartedStory(true); 
     };
 
+    // Handler for submitting a chapter
     const handleChapterSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault(); 
 
+        // Create a new chapter object
         const newChapter = {
             title: currentChapter.title,
             content: currentChapter.content,
@@ -98,58 +111,67 @@ function CreateStory() {
 
         if (chapterIndexToEdit !== null) {
             const updatedChapters = [...chapters];
-            updatedChapters[chapterIndexToEdit] = newChapter;
+            updatedChapters[chapterIndexToEdit] = newChapter; // Update existing chapter if in edit mode
             setChapters(updatedChapters);
         } else {
             if (chapters.length < 9) {
-                setChapters([...chapters, newChapter]);
+                setChapters([...chapters, newChapter]); 
             } else {
-                alert("You can only create up to nine chapters.");
+                alert("You can only create up to nine chapters."); 
                 return;
             }
         }
 
+        // Reset current chapter and close chapter modal
         setCurrentChapter({ title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null, isEnd: false }] });
         setIsChapterModalOpen(false);
         setChapterIndexToEdit(null);
     };
 
+    // Handler for submitting an option as a new chapter
     const handleOptionSubmit = (event) => {
-        event.preventDefault();
+        event.preventDefault(); 
 
+        // Create a new chapter object
         const newChapter = {
             title: currentChapter.title,
             content: currentChapter.content,
             options: currentChapter.options
         };
 
+        // Update chapters array
         const updatedChapters = [...chapters];
         updatedChapters[chapters.length] = newChapter;
 
+        // Set the nextChapterIndex for the option in the parent chapter
         const parentChapterIndex = currentOptionIndex.parentChapterIndex;
         const parentOptionIndex = currentOptionIndex.parentOptionIndex;
-
         updatedChapters[parentChapterIndex].options[parentOptionIndex].nextChapterIndex = chapters.length;
 
         setChapters(updatedChapters);
 
+        // Reset current chapter and close option modal
         setCurrentChapter({ title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null, isEnd: false }] });
         setIsOptionModalOpen(false);
         setCurrentOptionIndex(null);
     };
 
+    // Function to add a new chapter for a specific option
     const addNewChapterForOption = (parentChapterIndex, parentOptionIndex) => {
         if (chapters.length >= 9) {
-            alert("You can only create up to nine chapters.");
+            alert("You can only create up to nine chapters."); 
             return;
         }
+        // Set the current option index and open the option modal
         setCurrentOptionIndex({ parentChapterIndex, parentOptionIndex });
         setCurrentChapter({ title: '', content: '', options: [{ choiceText: '', nextChapterIndex: null, isEnd: false }] });
         setIsOptionModalOpen(true);
     };
 
+    // Function to edit an existing chapter
     const editChapter = (index) => {
         const chapterToEdit = chapters[index];
+   
         setCurrentChapter({
             title: chapterToEdit.title,
             content: chapterToEdit.content,
@@ -159,15 +181,18 @@ function CreateStory() {
         setIsChapterModalOpen(true);
     };
 
+    // Function to finalize the story and navigate to the story index page
     const finalizeStory = () => {
+        // Navigate to the story index page with the story details in the state
         navigate('/story-index', { state: { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } });
     };
 
+    // Function to render chapters recursively
     const renderChapters = (chapterIndex, depth = 0) => {
         const chapter = chapters[chapterIndex];
-        if (!chapter) return null;
+        if (!chapter) return null; 
 
-        const indentClass = `indent-${depth}`;
+        const indentClass = `indent-${depth}`; // Class for indenting nested chapters
 
         return (
             <div className={`chapter-wrapper ${indentClass}`} key={chapterIndex}>
@@ -206,6 +231,7 @@ function CreateStory() {
                 {chapters.length > 0 && <button className="finalize-story-button" onClick={finalizeStory}>Finalize Story</button>}
             </div>
 
+            {/* Modal for initial story details */}
             <Modal
                 isOpen={isInitialModalOpen}
                 onRequestClose={() => setIsInitialModalOpen(false)}
@@ -228,6 +254,7 @@ function CreateStory() {
                 </form>
             </Modal>
 
+            {/* Modal for adding or editing a chapter */}
             <Modal
                 isOpen={isChapterModalOpen}
                 onRequestClose={() => setIsChapterModalOpen(false)}
@@ -265,6 +292,7 @@ function CreateStory() {
                 </form>
             </Modal>
 
+            {/* Modal for adding a new chapter for a specific option */}
             <Modal
                 isOpen={isOptionModalOpen}
                 onRequestClose={() => setIsOptionModalOpen(false)}
