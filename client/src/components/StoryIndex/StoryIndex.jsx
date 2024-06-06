@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams, Link } from 'react-router-dom';
 import './StoryIndex.css';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_STORY } from '../../utils/queries';
@@ -107,10 +107,12 @@ const StoryIndex = () => {
                 <div className="story-description">
                     <h2>{story.title}</h2>
                     <p>Created by {story.author}</p>
-                    <p>{story.description}</p>                          
-                    <button className="start-adventure-button"
-                        // onClick={startStory}
-                    >Start your Adventure Here</button>
+                    <p>{story.description}</p>                   
+                    <Link to={`/story-path/${story._id}`}>
+                        <button className="start-adventure-button"
+                            // onClick={startStory}
+                            >Start your Adventure Here</button>
+                    </Link>
                 </div>
             </main>
 

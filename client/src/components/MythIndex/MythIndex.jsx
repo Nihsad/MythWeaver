@@ -310,13 +310,9 @@ import Auth from '../../utils/auth';
 import './MythIndex.css';
 
 const MythIndex = () => {
-    // State to control the visibility of the modal
-    const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState('login'); // To toggle between login and signup
-
     // Apollo Client query to fetch stories
     const { loading, data, error } = useQuery(GET_STORIES);
-    const stories = Array.isArray(data?.stories) ? data.stories : [];
+    const stories = data?.stories || {};
 
     if (loading) {
         return <h2>LOADING...</h2>;
@@ -336,28 +332,6 @@ const MythIndex = () => {
 
     return (
         <div className="mythweaver">
-            <header className="header">
-                <div className="header-left">
-                    {Auth.loggedIn() ? (
-                        <>
-                            <a href="/user-profile" className="header-link">
-                                <button className="header-button">Profile</button>
-                            </a>
-                            <button className="header-button" onClick={Auth.logout}>Log out</button>
-                        </>
-                    ) : (
-                        <>
-                            <button className="header-button" onClick={() => { setModalType('login'); setShowModal(true); }}>Log in</button>
-                            <button className="header-button" onClick={() => { setModalType('signup'); setShowModal(true); }}>Sign Up</button>
-                        </>
-                    )}
-                </div>
-                <h1 className="title"><Link to='/'>MythWeaver</Link></h1>
-                <div className="header-right">
-                    <button className="header-button">About Us</button>
-                    <button className="header-button">Donate</button>
-                </div>
-            </header>
             <main className="main-content">
                 <div className="story-grid">
                     {stories.map((story, index) => (
@@ -382,26 +356,6 @@ const MythIndex = () => {
                     ))}
                 </div>
             </main>
-
-            <Modal
-                size='xl' 
-                show={showModal}
-                onHide={() => setShowModal(false)}
-                aria-labelledby='auth-modal'
-                centered>
-                <Modal.Header closeButton className="modal-header-center">
-                    <Modal.Title id='auth-modal' className="modal-title-lg">
-                        {modalType === 'login' ? 'Login' : 'Sign Up'}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="modal-body-lg">
-                    {modalType === 'login' ? (
-                        <LoginForm handleModalClose={() => setShowModal(false)} />
-                    ) : (
-                        <SignupForm handleModalClose={() => setShowModal(false)} />
-                    )}
-                </Modal.Body>
-            </Modal>
         </div>
     );
 }
