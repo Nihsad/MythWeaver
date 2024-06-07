@@ -62,6 +62,30 @@ function AboutUs() {
                 <div className="about-us-card">
                     <h2 className="about-us-title">Contact Us</h2>
                     <p className="about-us-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam condimentum accumsan erat, nec porta justo posuere sit amet. Sed ut tortor vel ipsum mollis volutpat.</p>
+                    
+                    {/* Contact Form */}
+                    <form action="/submit-form" method="POST">
+                      <label htmlFor="username">Username:</label><br />
+                      <input type="text" id="username" name="username" required /><br /><br />
+                      
+                      <label htmlFor="email">Email:</label><br />
+                      <input type="email" id="email" name="email" required /><br /><br />
+                      
+                      <label htmlFor="message">Message:</label><br />
+                      <textarea id="message" name="message" rows="4" cols="50" required></textarea><br /><br />
+                      
+                      <label htmlFor="type">Type of Message:</label><br />
+                      <select id="type" name="type" required>
+                        <option value="" disabled selected>Select type</option>
+                        <option value="Bug Report">Bug Report</option>
+                        <option value="Question">Question</option>
+                        <option value="Feedback">Feedback</option>
+                        {/* Add more options as needed */}
+                      </select><br /><br />
+                      
+                      <input type="submit" value="Submit" />
+                    </form>
+                    {/* End Contact Form */}
                 </div>
             </main>
         </div>

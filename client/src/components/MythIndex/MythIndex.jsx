@@ -40,34 +40,6 @@ const MythIndex = () => {
     };
 
     return (
-        <div className="mythweaver">
-
-            {/* I ran into the double header issue again and it made me crazy so I just commented it out. If you know how to fix it please do! - Haleigh */}
-            {/* Header */}
-            {/* <header className="header">
-                <div className="header-left">
-                    {Auth.loggedIn() ? (
-                        <>
-                            <a href="/user-profile" className="header-link">
-                                <button className="header-button">Profile</button>
-                            </a>
-                            <button className="header-button" onClick={Auth.logout}>Log out</button>
-                        </>
-                    ) : (
-                        <>
-                            <button className="header-button" onClick={() => { setModalType('login'); setShowModal(true); }}>Log in</button>
-                            <button className="header-button" onClick={() => { setModalType('signup'); setShowModal(true); }}>Sign Up</button>
-                        </>
-                    )}
-                </div>
-                <h1 className="title"><Link to='/'>MythWeaver</Link></h1>
-                <div className="header-right">
-                    <button className="header-button">About Us</button>
-                    <button className="header-button">Donate</button>
-                </div>
-            </header> */}
-
-            {/* Main Content */}
             <main className="main-content">
                 {loading && <h2>LOADING...</h2>}
                 <div className="story-grid">
@@ -97,28 +69,6 @@ const MythIndex = () => {
                     ))}
                 </div>
             </main>
-
-            {/* Modal */}
-            <Modal
-                size='xl'
-                show={showModal}
-                onHide={() => setShowModal(false)}
-                aria-labelledby='auth-modal'
-                centered>
-                <Modal.Header closeButton className="modal-header-center">
-                    <Modal.Title id='auth-modal' className="modal-title-lg">
-                        {modalType === 'login' ? 'Login' : 'Sign Up'}
-                    </Modal.Title>
-                </Modal.Header>
-                <Modal.Body className="modal-body-lg">
-                    {modalType === 'login' ? (
-                        <LoginForm handleModalClose={() => setShowModal(false)} />
-                    ) : (
-                        <SignupForm handleModalClose={() => setShowModal(false)} />
-                    )}
-                </Modal.Body>
-            </Modal>
-        </div>
     );
 }
 
