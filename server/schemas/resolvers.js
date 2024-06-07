@@ -1,5 +1,6 @@
 const { User, Story, Step, Review } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
+const stripe = require('stripe')('sk_test_51PMLWzAHauJOQVmCMzjCdQJsYgF833SAFm3Yu9pkVnU4MNlg5U05bivhr1HQQlzOLx4mr9ahdYVIssEMSXxJzGOQ00IqrU8sTo');
 
 // Testing Server- Haleigh
 const resolvers = {
@@ -42,10 +43,10 @@ const resolvers = {
             }
         },
     },
-    
+
     Mutation: {
         addUser: async (parent, { username, email, password }) => {
-            const user = await User.create({ username, email, password }); 
+            const user = await User.create({ username, email, password });
             const token = signToken(user);
             return { token, user };
         },
@@ -87,7 +88,7 @@ const resolvers = {
                     description: input.description,
                     imageUrl: input.imageUrl,
                     price: input.price,
-                    genre: input.genre, 
+                    genre: input.genre,
                     tags: input.tags,
                     steps: stepIds
                 });
@@ -97,7 +98,7 @@ const resolvers = {
 
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $addToSet: { 'authorInfo.createdStories': story._id } }, 
+                    { $addToSet: { 'authorInfo.createdStories': story._id } },
                     { new: true }
                 )
 
@@ -105,7 +106,7 @@ const resolvers = {
                     .populate('steps')
                     .populate('reviews')
                     .exec();
-                
+
                 // Finding the created story and populating steps and reviews allows us to make stepId non-nullable while avoiding 'cannot return null for non-nullable field' errors.
                 return createdStory;
 
