@@ -5,23 +5,23 @@ import LoginForm from '../LoginForm/LoginForm';
 import Auth from '../../utils/auth';
 import './Header.css';
 import { Modal } from 'react-bootstrap';
+import CyberpunkTheme from '../CyberpunkTheme/CyberpunkTheme'; // Import the CyberpunkTheme component
 
 const Header = () => {
-    // State to control the visibility of the modal
     const [showModal, setShowModal] = useState(false);
-    const [modalType, setModalType] = useState('login'); // To toggle between login and signup
+    const [modalType, setModalType] = useState('login');
     const location = useLocation();
-    const [theme, setTheme] = useState('fairycore'); // Initial theme state
-    const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown visibility
+    const [theme, setTheme] = useState('fairycore');
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const handleThemeChange = (newTheme) => {
         setTheme(newTheme);
-        // Apply theme logic here
         document.documentElement.setAttribute('data-theme', newTheme);
     };
 
     return (
         <>
+            {theme === 'cyberpunk' && <CyberpunkTheme />} {/* Add the cyberpunk theme canvas */}
             <header className="header">
                 <div className="header-left">
                     {Auth.loggedIn() ? (
