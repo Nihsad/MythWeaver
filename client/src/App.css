@@ -11,7 +11,7 @@
   font-size: 16px; /* set default for rem */
   --border-radius: 10px;
   --theme-font: 'Chewy', cursive, sans-serif;
-  --header-height: 175px;
+  --header-height: 274px; /* header & footer height combined */
 
   /* COLORS */
   --bg-color: rgb(211, 201, 198); /* #d3c9c6 */

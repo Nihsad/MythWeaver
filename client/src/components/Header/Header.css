@@ -73,7 +73,7 @@
   position: absolute;
   right: 0;
   background-color: var(--header-link-hover);
-  min-width: 130px;
+  width: 120px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
   border-radius: 0px 0px 10px 10px;
@@ -89,10 +89,12 @@
   text-decoration: none;
   font-size: 14px;
   border-radius: 0px 0px 10px 10px;
+  width: 120px;
 }
 
 .theme-button:hover {
   background-color: var(--header-link-hover);
+  border-radius: 0px;
 }
 
 .dropdown-content button {
@@ -100,11 +102,11 @@
   padding: 12px 16px;
   text-decoration: none;
   display: block;
-  width: 100%;
   border: none;
   background: none;
   text-align: left;
   cursor: pointer;
+  width: 120px;
 }
 
 .dropdown-content button:hover {

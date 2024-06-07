@@ -45,24 +45,24 @@
     justify-content: center;
 }
 
-.star {
+.star-rating .star {
     font-size: 2em;
     cursor: pointer;
     color: var(--header-link-hover);
     transition: color 0.2s;
 }
 
-.star.filled {
+.star-rating .star.filled {
     color: #ffcc00;
 }
 
-.star:hover,
-.star:hover ~ .star {
+.star-rating .star:hover,
+.star-rating .star:hover ~ .star {
     color: #ffcc00;
 }
 
 /* This line is necessary to revert the color of the stars to the right of the hovered star */
-.star:hover ~ .star {
+.star-rating .star:hover ~ .star {
     color: var(--header-link-hover);
 }
 

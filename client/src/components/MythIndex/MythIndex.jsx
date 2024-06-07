@@ -25,33 +25,7 @@ const MythIndex = () => {
     // console.log(storiesData);
 
     return (
-        <div className="mythweaver">
-            <header className="header">
-	<div className="header-left">
-		{Auth.loggedIn() ? (
-			<>
-				{/* If user is logged in, there should be a 'Log out' link and the Profile link should go to /user-profile. */}
-				<button className="header-button" onClick={Auth.logout}>Log out</button>
-				<a href="/user-profile" className="header-link">
-					<button className="header-button">Profile</button>
-				</a>
-            </>
-            ) : (
-            <>
-                {/* If user is not logged in, clicking the 'Log in' link should open the signup/login modal, and clicking the 'Profile' link should also open the signup/login modal because user can't view 'Profile' while logged out. */}
-                <button className="header-button" onClick={() => setShowModal(true)}>Log in</button>
-                            <div className="header-link">
-                                <button className="header-button" onClick={() => setShowModal(true)}>Profile</button>
-                            </div>
-                        </>
-                    )}
-                </div>
-                <h1 className="title" as={Link} to='/'>MythWeaver</h1>
-                <div className="header-right">
-                    <button className="header-button">About Us</button>
-                    <button className="header-button">Donate</button>
-                </div>
-            </header>
+        <div className="mythweaver">            
             <main className="main-content">
                 <div className="story-grid">
                     {Array(8).fill().map((_, index) => (
