@@ -9,6 +9,7 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+
 // Creates a new instance of an Apollo server with the GraphQL schema
 const server = new ApolloServer({
     typeDefs,
@@ -23,7 +24,7 @@ const startApolloServer = async () => {
     app.use(express.json());
 
     app.use('/graphql', expressMiddleware(server, {
-        context: authMiddleware
+        context: authMiddleware,
     }));
 
     if (process.env.NODE_ENV === 'production') {
@@ -34,15 +35,17 @@ const startApolloServer = async () => {
         });
     }
 
-    db.once('open', () => {
+    db.connection.once('open', () => {
         app.listen(PORT, () => {
             console.log(`API server running on port ${PORT}!`);
             console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
         });
     });
+
+    db.connection.on('error', (err) => {
+        console.error('MongoDB connection error:', err);
+    });
 };
 
 // Call the async function to start the server
 startApolloServer();
-
-
