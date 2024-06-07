@@ -8,7 +8,7 @@ const choiceSchema = new Schema(
             required: true,
         },
         // the custom stepId of the next step
-        nextChapterIndex: {
+        nextStepId: {
             type: Number,
             required: true,
         },

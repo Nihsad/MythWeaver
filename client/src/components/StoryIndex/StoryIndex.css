@@ -95,33 +95,6 @@
     transition: background-color ease-in-out 0.5s;
 }
 
-/* Added temporary styling for TBR List Button, of course feel free to change */
-.purchase-button-container {
-    background-color: var(--dk-container-color);
-    padding: 0px;
-    height: fit-content;
-    text-align: center;
-    align-content: center;
-    align-self: start;
-    border-radius: var(--border-radius);
-}
-
-/* Added temporary styling for TBR List Button, of course feel free to change */
-.purchase-button {
-    background-color: var(--dk-container-color);
-    color: var(--accent-container);
-    padding: 10px 20px;
-    margin: 0;
-    align-self: flex-end;
-    border: none;
-    height: fit-content;
-    border-radius: var(--border-radius);
-    font-size: 18px;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color ease-in-out 0.5s;
-}
-
 .story-description {
     grid-area: 1 / 2 / 6 / 5;
     background-color: var(--mid-dark-accent);

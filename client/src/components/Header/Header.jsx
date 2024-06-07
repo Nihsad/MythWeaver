@@ -10,6 +10,7 @@ const Header = () => {
     // State to control the visibility of the modal
     const [showModal, setShowModal] = useState(false);
     const [modalType, setModalType] = useState('login'); // To toggle between login and signup
+
     const location = useLocation();
     const [theme, setTheme] = useState('fairycore'); // Initial theme state
     const [dropdownOpen, setDropdownOpen] = useState(false); // State for dropdown visibility
@@ -49,7 +50,7 @@ const Header = () => {
                         </>
                     )}
                     {location.pathname === '/user-profile' && (
-                        <Link to="/myth-index" className="header-link">
+                        <Link to="/story-index" className="header-link">
                             <button className="header-button">Stories</button>
                         </Link>
                     )}
@@ -69,8 +70,9 @@ const Header = () => {
                     )}
                 </div>
             </div>
+
             <Modal
-                size='xl'
+                size='xl' 
                 show={showModal}
                 onHide={() => setShowModal(false)}
                 aria-labelledby='auth-modal'

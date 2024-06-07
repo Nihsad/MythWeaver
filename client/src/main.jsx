@@ -47,7 +47,7 @@ const router = createBrowserRouter([
                         path: 'about-us',
                         element: <AboutUs />
                     }, {
-                        path: 'story-path/:storyId',
+                        path: 'story-path',
                         element: <StoryPath />
                     }, {
                         path: 'story-end',

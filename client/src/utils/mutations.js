@@ -38,15 +38,14 @@ export const ADD_STORY = gql`
             genre
             tags
             publishedDate
-            chapters {
+            steps {
                 _id
-                chapterIndex
-                title
-                content
-                isEnd
+                stepId
+                stepText
+                type
                 choices {
                     choiceText
-                    nextChapterIndex
+                    nextStepId
                 }
             }
         }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useLocation, useParams, Link } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import './StoryIndex.css';
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_STORY } from '../../utils/queries';
@@ -72,10 +72,6 @@ const StoryIndex = () => {
         return formattedTags;
     }
 
-    const startStripe = () => {
-        // Do something
-    }
-
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -107,22 +103,14 @@ const StoryIndex = () => {
                     <button className='tbr-button' onClick={handleAddToTBR}>Add to To Be Read List</button>
                 </div>
 
-                {story.price !== 0 && 
-                    <div className='purchase-button-container'>
-                        <button className='purchase-button' onClick={startStripe}>{`Pay $${story.price} for forever-access to this story`}</button>
-                    </div>
-                }
-
                 {/* should have a max character limit. 400-500? */}
                 <div className="story-description">
                     <h2>{story.title}</h2>
                     <p>Created by {story.author}</p>
-                    <p>{story.description}</p>                   
-                    <Link to={`/story-path/${story._id}`}>
-                        <button className="start-adventure-button"
-                            // onClick={startStory}
-                            >Start your Adventure Here</button>
-                    </Link>
+                    <p>{story.description}</p>                          
+                    <button className="start-adventure-button"
+                        // onClick={startStory}
+                    >Start your Adventure Here</button>
                 </div>
             </main>
 
