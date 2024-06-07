@@ -7,7 +7,7 @@ const readerInfoSchema = new Schema(
             ref: 'Story',
             default: [],
         }],
-        savedStories: {
+        bookmarkedStories: {
             type: [{
                 storyId: { type: Schema.Types.ObjectId, ref: 'Story' },
                 // The rating that this particular user gave the story they played and saved. The idea is to give the user the option to save a story at the page they go to after they complete the story. That page would have a 'Save Story' button. 

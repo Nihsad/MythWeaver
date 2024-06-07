@@ -6,6 +6,7 @@ import {
     createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+// Bring in the Outlet component which will render the proper pages conditionally on the browser's URL
 import { Outlet } from 'react-router-dom';
 // import Tree from './components/Tree/index';
 
@@ -36,6 +37,7 @@ const client = new ApolloClient({
 function App() {
     return (
         <ApolloProvider client={client}>
+            {/* The Outlet component will be replaced by the proper page based on the URL */}
             <Outlet />
         </ApolloProvider>
     );

@@ -1,30 +1,133 @@
 import React from 'react';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import './StoryIndex.css';
+import { useQuery, useMutation } from '@apollo/client';
+import { GET_STORY } from '../../utils/queries';
+import { ADD_TO_TBR } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 const StoryIndex = () => {
+    // const location = useLocation();
+    // const navigate = useNavigate();
+    // const { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } = location.state || {};
+
+    // const startStory = () => {
+    //     navigate('/story-path', { state: { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } });
+    // };
+
+    // if (!storyName || !chapters) {
+    //     return <div>No story data available. Please create a story first.</div>;
+    // }
+
+    // Split the tags by comma and trim whitespace
+    // const tagsArray = storyTags ? storyTags.split(',').map(tag => tag.trim()) : [];
+
+
+    // Start query logic to get this single story's data
+    const { storyId } = useParams();
+    const { loading, data } = useQuery(GET_STORY, {
+        variables: { storyId: storyId },
+    });
+    const story = data?.story || {};
+    console.log(story);
+    // End query logic to get this single story's data
+
+    const [addToTBR, { error }] = useMutation(ADD_TO_TBR);
+
+    // take in a storyId parameter here? have storyId as a state variable? 
+    const handleAddToTBR = async () => {
+
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            // Get the user's data, including _id, by decoding their token
+            const profile = await Auth.getProfile();
+            const data = await addToTBR({
+                variables: { storyId }
+            });
+
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    const renderStars = (rating) => {
+        const stars = [];
+        for (let i = 0; i < rating; i++) {
+            stars.push(<span key={i}>★</span>);
+        }
+        return stars;
+    };
+
+    const formatTags = (tags) => {
+        if (!tags || tags.length === 0) {
+            return null;
+        }
+
+        const formattedTags = tags.join(', ');
+        return formattedTags;
+    }
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div className="story-index">            
             <main className="story-main-content">
-                <div className="story-photo"><img src="https://picsum.photos/200/200" /></div>
+                <div className="story-photo">
+                    <img src={story.imageUrl} alt={story.title} />
+                </div>
                 <div className="rating">
-                    <span className="star">&#9733;</span>
-                    <span className="star">&#9733;</span>
-                    <span className="star">&#9733;</span>
-                    <span className="star">&#9733;</span>
-                    <span className="star">&#9733;</span>
+                    {story.reviews?.length === 0 || !story?.reviews ? (
+                        <p>No ratings yet!</p>
+                    ) : (
+                        <>
+                            {renderStars(story.averageRating)}
+                            <p>Rated {story.averageRating} stars on average by {story.ratingsCount} people.</p>
+                        </>
+                    )}
                 </div>
+
                 <div className="genre-tags-links">
-                    <div>Genre of Story</div>
-                    <div>Tags</div>
-                    <div>Links</div>
+                    <div>Genre: {story.genre}</div>
+                    <div>Tags: {formatTags(story.tags)}</div>
                 </div>
+
+                {/* Added TBR List Button - Sara */}
+                <div className='tbr-button-container'>
+                    <button className='tbr-button' onClick={handleAddToTBR}>Add to To Be Read List</button>
+                </div>
+
                 {/* should have a max character limit. 400-500? */}
                 <div className="story-description">
-                    <h2>Brief Description of Story:</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Orci ac auctor augue mauris. Nisi est sit amet facilisis magna etiam tempor orci. Elit ut aliquam purus sit amet luctus venenatis lectus. Netus et malesuada fames ac turpis. Donec adipiscing tristique risus nec feugiat in fermentum posuere. Vel eros donec ac odio. Malesuada proin libero nunc consequat interdum varius. Nisi vitae suscipit tellus mauris a diam maecenas sed enim. Vitae tempus quam pellentesque nec nam aliquam sem et.</p>                          
-                <button className="start-adventure-button">Start your Adventure Here</button>
+                    <h2>{story.title}</h2>
+                    <p>Created by {story.author}</p>
+                    <p>{story.description}</p>                          
+                    <button className="start-adventure-button"
+                        // onClick={startStory}
+                    >Start your Adventure Here</button>
                 </div>
             </main>
+
+            {story.reviews?.length > 0 &&
+                <div className='story-reviews'>
+                    {story.reviews.map((review) => (
+                        <div key={review._id}>
+                            <p>{review.username} on {review.createdAtFormattedDate}:</p>
+                            {renderStars(review.rating)}
+                            {/* I currently have the typeDefs set up so that a star rating is mandatory but reviewText is not. I'm not super opinionated about that, we could make reviewText mandatory as well. At least for now, this logic is here so we check for reviewText before rendering it. */}
+                            {review.reviewText && 
+                                <p>{review.reviewText}</p>
+                            }
+                        </div>
+                    ))}
+                </div>
+            }
         </div>
     );
 };

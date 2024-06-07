@@ -12,7 +12,7 @@ export const GET_PROFILE = gql`
             }
             readerInfo {
                 purchasedStories
-                savedStories {
+                bookmarkedStories {
                     storyId
                     rating
                 }
@@ -32,9 +32,46 @@ export const GET_STORIES = gql`
             description
             imageUrl
             price
+            genre
+            tags
             publishedDate
             averageRating
             ratingsCount
+        }
+    }
+`;
+
+export const GET_STORY = gql`
+    # This is currently all the info for 1 story
+    query GET_STORY($storyId: ID!) {
+        story(storyId: $storyId) {
+            _id
+            title 
+            author
+            description
+            imageUrl
+            price
+            genre
+            tags
+            publishedDate
+            steps {
+                _id
+                stepId
+                stepText
+                type
+                choices {
+                    _id
+                    choiceText
+                    nextStepId
+                }
+            }
+            reviews {
+                _id
+                username
+                rating
+                reviewText
+                createdAtFormattedDate
+            }
         }
     }
 `;

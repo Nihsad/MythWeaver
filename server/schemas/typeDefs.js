@@ -8,7 +8,7 @@ const typeDefs = `
         authorInfo: AuthorInfo
         readerInfo: ReaderInfo
         createdStoriesCount: Int
-        savedStoriesCount: Int
+        bookmarkedStoriesCount: Int
     }
 
     type Auth {
@@ -24,12 +24,12 @@ const typeDefs = `
     type ReaderInfo {
         # used to be purchasedStories: [Story]!
         purchasedStories: [ID]
-        savedStories: [SavedStories]
+        bookmarkedStories: [bookmarkedStories]
         # used to be toBeReadStories: [Story]!
         toBeReadStories: [ID]
     }
     
-    type SavedStories {
+    type bookmarkedStories {
         storyId: ID
         rating: Int
     }
@@ -37,11 +37,12 @@ const typeDefs = `
     type Story {
         _id: ID!
         title: String!
-        # Currently working with this field and trying to find a way to successfully get author as a string when doing GET_STORIES query. May need to change to String! and adjust ADD_STORY mutation.
-        author: ID!
+        author: String!
         description: String!
         imageUrl: String
         price: Int!
+        genre: String
+        tags: [String]
         publishedDate: String
         steps: [Step]!
         reviews: [Review]
@@ -57,6 +58,32 @@ const typeDefs = `
         choices: [Choice]
     }
 
+    type Choice {
+        _id: ID!
+        choiceText: String!
+        nextStepId: Int!
+    }
+
+    type Review {
+        _id: ID!
+        username: String!
+        rating: Int!
+        reviewText: String
+        createdAt: String
+        createdAtFormattedDate: String
+    }
+
+    input StoryInput {
+        title: String!
+        author: String!
+        description: String!
+        imageUrl: String
+        price: Int!
+        genre: String!
+        tags: [String]!
+        steps: [StepInput]!
+    }
+
     input StepInput {
         stepText: String!
         type: String!
@@ -68,31 +95,26 @@ const typeDefs = `
         nextStepId: Int!
     }
 
-    type Choice {
-        _id: ID!
-        choiceText: String!
-        nextStepId: Int!
-    }
-
-    type Review {
-        _id: ID!
-        # Current plan is to store the user's ID and populate into a username as needed
-        username: ID!
+    input ReviewInput {
+        storyId: ID!
+        username: String!
         rating: Int!
-        reviewText: String
-        createdAt: String
+        reviewText: String        
     }
 
     type Query {
         profile: User
         stories: [Story]
-        story(_id: ID!): Story
+        story(storyId: ID!): Story
     }
 
     type Mutation {
-        addUser(username: String!, email: String! password: String!): Auth
+        addUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
-        addStory(title: String!, author: ID!, description: String!, imageUrl: String, price: Int!, steps: [StepInput]!): Story
+        addStory(input: StoryInput!): Story
+        addToTBR(storyId: ID!): User
+        addToBookmarks(storyId: ID!): User
+        addReview(input: ReviewInput!): Review
     }
 `;
 
