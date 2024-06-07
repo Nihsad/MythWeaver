@@ -49,11 +49,13 @@ const router = createBrowserRouter([
                     }, {
                         path: 'story-path/:storyId',
                         element: <StoryPath />
-                    }, {
-                        path: 'story-end',
-                        element: <StoryEnd />
-                    }, {
-                        path: 'story-review',
+                    },
+                    // {
+                    //     path: 'story-end',
+                    //     element: <StoryEnd />
+                    // },
+                    {
+                        path: 'story-review/:storyId',
                         element: <StoryReview />
                     }, {
                         path: 'create-story-test',

@@ -17,32 +17,24 @@ const typeDefs = `
     }
 
     type AuthorInfo {
-        # used to be createdStories: [Story]!
-        createdStories: [ID]
+        createdStories: [Story]
     }
 
     type ReaderInfo {
-        purchasedStories: [ID]
-        bookmarkedStories: [bookmarkedStories]
-        toBeReadStories: [ID]
-    }
-    
-    type bookmarkedStories {
-        storyId: ID
-        rating: Int
+        bookmarkedStories: [Story]
+        toBeReadStories: [Story]
     }
 
     type Story {
-        _id: ID!
-        title: String!
-        author: String!
-        description: String!
+        _id: ID
+        title: String
+        author: String
+        description: String
         imageUrl: String
-        price: Int!
         genre: String
         tags: [String]
         publishedDate: String
-        chapters: [Chapter]!
+        chapters: [Chapter]
         reviews: [Review]
         averageRating: Int
         ratingsCount: Int
@@ -60,7 +52,7 @@ const typeDefs = `
     type Choice {
         _id: ID!
         choiceText: String!
-        nextChapterIndex: Int!
+        nextChapterIndex: Int
     }
 
     type Review {
@@ -73,18 +65,17 @@ const typeDefs = `
     }
 
     input StoryInput {
-        title: String!
-        author: String!
-        description: String!
+        title: String
+        author: String
+        description: String
         imageUrl: String
-        price: Int!
-        genre: String!
-        tags: [String]!
-        chapters: [ChapterInput]!
+        genre: String
+        tags: [String]
+        chapters: [ChapterInput]
     }
 
     input ChapterInput {
-        chapterIndex: Int!
+        chapterIndex: Int
         title: String!
         content: String!
         isEnd: Boolean!
@@ -93,7 +84,7 @@ const typeDefs = `
 
     input ChoiceInput {
         choiceText: String!
-        nextChapterIndex: Int!
+        nextChapterIndex: Int
     }
 
     input ReviewInput {
@@ -114,9 +105,13 @@ const typeDefs = `
         addUser(username: String!, email: String!, password: String!): Auth
         login(email: String!, password: String!): Auth
         addStory(input: StoryInput!): Story
+        deleteStory(storyId: ID!): User
         addToTBR(storyId: ID!): User
+        removeFromTBR(storyId: ID!): User
         addToBookmarks(storyId: ID!): User
+        removeFromBookmarks(storyId: ID!): User
         addReview(input: ReviewInput!): Review
+        
     }
 `;
 

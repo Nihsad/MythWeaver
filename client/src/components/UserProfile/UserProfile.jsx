@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import './UserProfile.css';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
 import { GET_PROFILE } from '../../utils/queries';
+import { DELETE_STORY } from '../../utils/mutations';
+import { REMOVE_FROM_TBR } from '../../utils/mutations';
+import { REMOVE_FROM_BOOKMARKS } from '../../utils/mutations';
+import Auth from '../../utils/auth';
 
 const UserProfile = () => {
     // Mock data for testing purposes
@@ -93,7 +97,35 @@ const UserProfile = () => {
     };
 
     const { loading, data } = useQuery(GET_PROFILE);
-    const userData = data?.profile || mockData;
+    // const userData = data?.profile || mockData;
+    // const userData = mockData;
+    const userData = data?.profile
+    console.log(userData);
+
+    const [deleteStory, { deleteStoryError }] = useMutation
+        (DELETE_STORY, {
+            refetchQueries: [
+                GET_PROFILE,
+                'profile'
+            ]
+        });
+    
+    const [removeFromTBR, { removeFromTBRerror }] = useMutation
+        (REMOVE_FROM_TBR, {
+            refetchQueries: [
+                GET_PROFILE,
+                'profile'
+            ]
+        });
+    
+    const [removeFromBookmarks, { removeFromBookmarksError }] = useMutation
+        (REMOVE_FROM_BOOKMARKS, {
+            refetchQueries: [
+                GET_PROFILE,
+                'profile'
+            ]
+        });
+
 
     const [isOpen, setIsOpen] = useState({
         created: false,
@@ -121,19 +153,78 @@ const UserProfile = () => {
         window.location.href = `/create-story/${storyId}`;
     };
 
-    const handleDeleteStory = (storyId) => {
+    const handleDeleteStory = async (storyId) => {
         // Placeholder function
         console.log(`Delete story with ID: ${storyId}`);
+        console.log('The next console log will be your storyId from inside handleDeleteStory: ');
+        console.log(storyId);
+
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            const { data } = await deleteStory({
+                variables: { storyId }
+            });
+            if (!data) {
+                throw new Error('Sorry, there was an error in deleting a story.');
+            }
+        } catch (err) {
+            console.error(err);
+        }
     };
 
-    const handleRemoveFromBookmarkedStories = (storyId) => {
+    const handleRemoveFromBookmarkedStories = async (storyId) => {
         // Placeholder function
         console.log(`Remove from bookmarked stories with ID: ${storyId}`);
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            const { data } = await removeFromBookmarks({
+                variables: { storyId }
+            });
+            if (!data) {
+                throw new Error('Sorry, there was an error in deleting a story.');
+            }
+        } catch (err) {
+            console.error(err);
+        }
     };
 
-    const handleRemoveFromTBRList = (storyId) => {
+    const handleRemoveFromTBRList = async (storyId) => {
         // Placeholder function
         console.log(`Remove from TBR list with ID: ${storyId}`);
+        const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+        if (!token) {
+            return false;
+        }
+
+        try {
+            const { data } = await removeFromTBR({
+                variables: { storyId }
+            });
+            if (!data) {
+                throw new Error('Sorry, there was an error in deleting a story.');
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
+    const renderStars = (averageRating) => {
+        const stars = [];
+        for (let i = 0; i < averageRating; i++) {
+            stars.push(<span key={i}>★</span>);
+        }
+        return stars;
     };
 
     return (
@@ -147,17 +238,26 @@ const UserProfile = () => {
                         <h2 onClick={() => toggleSection('created')}>Stories You've Created</h2>
                         {isOpen.created && (
                             <div className="stories-grid">
-                                {userData.createdStories.map((story) => (
-                                    <div className="story-box" key={story.id}>
-                                        <a href={`/story-index/${story.id}`}>
-                                            <img src={story.image} alt={story.title} />
+                                {userData.authorInfo.createdStories.map((story, index) => (
+                                    <div className="story-box" key={story._id}>
+                                        <a href={`/story-index/${story._id}`}>
+                                            <img src={story.imageUrl} alt={story.title} />
                                             <h3>{story.title}</h3>
                                             <p>{story.description}</p>
-                                            <div className="rating">{'★'.repeat(story.rating)}{'☆'.repeat(5 - story.rating)}</div>
+                                            <div className="rating">
+                                                {story.reviews?.length === 0 || !story?.reviews ? (
+                                                    <p>No ratings yet!</p>
+                                                ) : (
+                                                    <>
+                                                        {renderStars(story.averageRating)}
+                                                        <p>Rated {story.averageRating} stars on average by {story.ratingsCount} people.</p>
+                                                    </>
+                                                )}
+                                            </div>
                                         </a>
                                         <div className="actions">
-                                                <button onClick={() => handleUpdateStory(story.id)}>Update Story</button>
-                                                <button className="delete-btn" onClick={() => handleDeleteStory(story.id)}>Delete Story</button>
+                                                <button onClick={() => handleUpdateStory(story._id)}>Update Story</button>
+                                                <button className="delete-btn" onClick={() => handleDeleteStory(story._id)}>Delete Story</button>
                                         </div>
                                     </div>
                                 ))}
@@ -169,17 +269,26 @@ const UserProfile = () => {
                         <h2 onClick={() => toggleSection('bookmarked')}>Bookmarked Stories</h2>
                         {isOpen.bookmarked && (
                             <div className="stories-grid">
-                                {userData.bookmarkedStories.map((story) => (
-                                    <div className="story-box" key={story.id}>
-                                        <a href={`/story/${story.id}`}>
-                                            <img src={story.image} alt={story.title} />
+                                {userData.readerInfo.bookmarkedStories.map((story) => (
+                                    <div className="story-box" key={story._id}>
+                                        <a href={`/story/${story._id}`}>
+                                            <img src={story.imageUrl} alt={story.title} />
                                             <h3>{story.title}</h3>
                                             <p>{story.author}</p>
                                             <p>{story.description}</p>
-                                            <div className="rating">{'★'.repeat(story.userRating)}{'☆'.repeat(5 - story.userRating)}</div>
+                                            <div className="rating">
+                                                {story.reviews?.length === 0 || !story?.reviews ? (
+                                                    <p>No ratings yet!</p>
+                                                ) : (
+                                                    <>
+                                                        {renderStars(story.averageRating)}
+                                                        <p>Rated {story.averageRating} stars on average by {story.ratingsCount} people.</p>
+                                                    </>
+                                                )}
+                                            </div>
                                         </a>
                                         <div className="actions">
-                                            <button className="remove-btn" onClick={() => handleRemoveFromBookmarkedStories(story.id)}>Remove from Bookmarked Stories</button>
+                                            <button className="remove-btn" onClick={() => handleRemoveFromBookmarkedStories(story._id)}>Remove from Bookmarked Stories</button>
                                         </div>
                                     </div>
                                 ))}
@@ -191,37 +300,27 @@ const UserProfile = () => {
                         <h2 onClick={() => toggleSection('tbr')}>To Be Read List</h2>
                         {isOpen.tbr && (
                             <div className="stories-grid">
-                                {userData.tbrList.map((story) => (
-                                    <div className="story-box" key={story.id}>
-                                        <a href={`/story/${story.id}`}>
-                                            <img src={story.image} alt={story.title} />
+                                {userData.readerInfo.toBeReadStories.map((story) => (
+                                    <div className="story-box" key={story._id}>
+                                        <a href={`/story/${story._id}`}>
+                                            <img src={story.imageUrl} alt={story.title} />
                                             <h3>{story.title}</h3>
                                             <p>{story.author}</p>
                                             <p>{story.description}</p>
-                                            <div className="rating">{'★'.repeat(story.rating)}{'☆'.repeat(5 - story.rating)}</div>
+                                            <div className="rating">
+                                                {story.reviews?.length === 0 || !story?.reviews ? (
+                                                    <p>No ratings yet!</p>
+                                                ) : (
+                                                    <>
+                                                        {renderStars(story.averageRating)}
+                                                        <p>Rated {story.averageRating} stars on average by {story.ratingsCount} people.</p>
+                                                    </>
+                                                )}
+                                            </div>
                                         </a>
                                         <div className="actions">
-                                            <button className="remove-btn" onClick={() => handleRemoveFromTBRList(story.id)}>Remove from TBR List</button>
+                                            <button className="remove-btn" onClick={() => handleRemoveFromTBRList(story._id)}>Remove from TBR List</button>
                                         </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="story-section">
-                        <h2 onClick={() => toggleSection('purchased')}>Purchased Stories</h2>
-                        {isOpen.purchased && (
-                            <div className="stories-grid">
-                                {userData.purchasedStories.map((story) => (
-                                    <div className="story-box" key={story.id}>
-                                        <a href={`/story/${story.id}`}>
-                                            <img src={story.image} alt={story.title} />
-                                            <h3>{story.title}</h3>
-                                            <p>{story.author}</p>
-                                            <p>{story.description}</p>
-                                            <div className="rating">{'★'.repeat(story.rating)}{'☆'.repeat(5 - story.rating)}</div>
-                                        </a>
                                     </div>
                                 ))}
                             </div>

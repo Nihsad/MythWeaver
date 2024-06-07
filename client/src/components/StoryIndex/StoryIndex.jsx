@@ -7,30 +7,13 @@ import { ADD_TO_TBR } from '../../utils/mutations';
 import Auth from '../../utils/auth';
 
 const StoryIndex = () => {
-    // const location = useLocation();
-    // const navigate = useNavigate();
-    // const { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } = location.state || {};
 
-    // const startStory = () => {
-    //     navigate('/story-path', { state: { storyName, storyImage, storyDescription, storyGenre, storyTags, chapters } });
-    // };
-
-    // if (!storyName || !chapters) {
-    //     return <div>No story data available. Please create a story first.</div>;
-    // }
-
-    // Split the tags by comma and trim whitespace
-    // const tagsArray = storyTags ? storyTags.split(',').map(tag => tag.trim()) : [];
-
-
-    // Start query logic to get this single story's data
     const { storyId } = useParams();
     const { loading, data } = useQuery(GET_STORY, {
         variables: { storyId: storyId },
     });
     const story = data?.story || {};
     console.log(story);
-    // End query logic to get this single story's data
 
     const [addToTBR, { error }] = useMutation(ADD_TO_TBR);
 
@@ -72,16 +55,12 @@ const StoryIndex = () => {
         return formattedTags;
     }
 
-    const startStripe = () => {
-        // Do something
-    }
-
     if (loading) {
         return <div>Loading...</div>;
     }
 
     return (
-        <div className="story-index">            
+        <div className="story-index">
             <main className="story-main-content">
                 <div className="story-photo">
                     <img src={story.imageUrl} alt={story.title} />
@@ -107,21 +86,15 @@ const StoryIndex = () => {
                     <button className='tbr-button' onClick={handleAddToTBR}>Add to To Be Read List</button>
                 </div>
 
-                {story.price !== 0 && 
-                    <div className='purchase-button-container'>
-                        <button className='purchase-button' onClick={startStripe}>{`Pay $${story.price} for forever-access to this story`}</button>
-                    </div>
-                }
-
                 {/* should have a max character limit. 400-500? */}
                 <div className="story-description">
                     <h2>{story.title}</h2>
                     <p>Created by {story.author}</p>
-                    <p>{story.description}</p>                   
+                    <p>{story.description}</p>
                     <Link to={`/story-path/${story._id}`}>
                         <button className="start-adventure-button"
-                            // onClick={startStory}
-                            >Start your Adventure Here</button>
+                        // onClick={startStory}
+                        >Start your Adventure Here</button>
                     </Link>
                 </div>
             </main>
@@ -133,7 +106,7 @@ const StoryIndex = () => {
                             <p>{review.username} on {review.createdAtFormattedDate}:</p>
                             {renderStars(review.rating)}
                             {/* I currently have the typeDefs set up so that a star rating is mandatory but reviewText is not. I'm not super opinionated about that, we could make reviewText mandatory as well. At least for now, this logic is here so we check for reviewText before rendering it. */}
-                            {review.reviewText && 
+                            {review.reviewText &&
                                 <p>{review.reviewText}</p>
                             }
                         </div>

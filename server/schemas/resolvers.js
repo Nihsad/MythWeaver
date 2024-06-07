@@ -4,18 +4,43 @@ const { signToken, AuthenticationError } = require('../utils/auth');
 // Testing Server- Haleigh
 const resolvers = {
     Query: {
+        // profile: async (parent, args, context) => {
+        //     if (context.user) {
+        //         return User.findOne({ _id: context.user._id });
+        //     }
+        //     throw AuthenticationError;
+        // },
         profile: async (parent, args, context) => {
             if (context.user) {
-                return User.findOne({ _id: context.user._id });
+                return User.findOne({ _id: context.user._id })
+                    .populate({
+                        path: 'authorInfo',
+                        populate: {
+                            path: 'createdStories'
+                        },
+                    })
+                    .populate({
+                        path: 'readerInfo',
+                        populate: {
+                            path: 'bookmarkedStories', 
+                            path: 'toBeReadStories'
+                        },
+                    });
             }
             throw AuthenticationError;
         },
 
         stories: async () => {
+            try {
+                const stories = await Story.find()
+                // .sort('-createdAt').limit(6);
 
-            const stories = await Story.find().sort('-createdAt').limit(6);
+                return stories;
+            } catch (err) {
+                console.error(err);
+                throw err;
+            }
 
-            return stories;
         },
 
         storiesTest: async () => {
@@ -65,10 +90,10 @@ const resolvers = {
             }
         },
     },
-    
+
     Mutation: {
         addUser: async (parent, { username, email, password }) => {
-            const user = await User.create({ username, email, password }); 
+            const user = await User.create({ username, email, password });
             const token = signToken(user);
             return { token, user };
         },
@@ -90,7 +115,6 @@ const resolvers = {
         },
         addStory: async (parent, { input }, context) => {
             try {
-
                 if (!context.user) {
                     throw AuthenticationError;
                 }
@@ -103,6 +127,7 @@ const resolvers = {
                     chapterIndex: index // Adding the index of the chapter as chapterIndex
                 }));
 
+                console.log(chaptersWithIndex);
 
                 // Iterate over the chapters with added index and create each chapter in the database
                 for (const chapter of chaptersWithIndex) {
@@ -115,8 +140,7 @@ const resolvers = {
                     author: input.author,
                     description: input.description,
                     imageUrl: input.imageUrl,
-                    price: input.price,
-                    genre: input.genre, 
+                    genre: input.genre,
                     tags: input.tags,
                     chapters: chapterObjectIds
                 });
@@ -126,7 +150,7 @@ const resolvers = {
 
                 const updatedUser = await User.findOneAndUpdate(
                     { _id: context.user._id },
-                    { $addToSet: { 'authorInfo.createdStories': story._id } }, 
+                    { $addToSet: { 'authorInfo.createdStories': story._id } },
                     { new: true }
                 )
 
@@ -134,7 +158,7 @@ const resolvers = {
                     .populate('chapters')
                     .populate('reviews')
                     .exec();
-                
+
                 // Finding the created story and populating steps and reviews allows us to make stepId non-nullable while avoiding 'cannot return null for non-nullable field' errors.
                 return createdStory;
 
@@ -143,7 +167,16 @@ const resolvers = {
                 throw new Error('There was an error when attempting to add a new story.');
             }
         },
-
+        deleteStory: async (parent, { storyId }, context) => {
+            if (context.user) {
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { 'authorInfo.createdStories': storyId } },
+                    { new: true }
+                );
+            }
+            throw AuthenticationError;
+        },
         addToTBR: async (parent, { storyId }, context) => {
             if (!context.user) {
                 throw AuthenticationError;
@@ -156,11 +189,37 @@ const resolvers = {
                     { new: true }
                 );
 
-                return updatedUser;
+                const userToReturn = await User.findOne({ _id: context.user._id })
+                    .populate({
+                        path: 'authorInfo',
+                        populate: {
+                            path: 'createdStories'
+                        },
+                    })
+                    .populate({
+                        path: 'readerInfo',
+                        populate: {
+                            path: 'bookmarkedStories', 
+                            path: 'toBeReadStories'
+                        },
+                    });
+                
+                return userToReturn;
 
             } catch (err) {
                 throw new Error(err);
             }
+        },
+
+        removeFromTBR: async (parent, { storyId }, context) => {
+            if (context.user) {
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { 'readerInfo.toBeReadStories': storyId } },
+                    { new: true }
+                );
+            }
+            throw AuthenticationError;
         },
 
         addToBookmarks: async (parent, { storyId }, context) => {
@@ -175,11 +234,36 @@ const resolvers = {
                     { new: true }
                 );
 
-                return updatedUser;
+                const userToReturn = await User.findOne({ _id: context.user._id })
+                    .populate({
+                        path: 'authorInfo',
+                        populate: {
+                            path: 'createdStories'
+                        },
+                    })
+                    .populate({
+                        path: 'readerInfo',
+                        populate: {
+                            path: 'bookmarkedStories',
+                            path: 'toBeReadStories'
+                        },
+                    });
 
+                return userToReturn;
             } catch (err) {
                 throw new Error(err);
             }
+        },
+
+        removeFromBookmarks: async (parent, { storyId }, context) => {
+            if (context.user) {
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { 'readerInfo.bookmarkedStories': storyId } },
+                    { new: true }
+                );
+            }
+            throw AuthenticationError;
         },
 
         addReview: async (parent, { input }, context) => {

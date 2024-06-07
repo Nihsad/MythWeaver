@@ -1,13 +1,13 @@
 const db = require('../config/connection');
-const { User, Story, Step, Review } = require('../models');
+const { User, Story, Chapter, Review } = require('../models');
 const userSeeds = require('./userSeeds.json');
 const cleanDB = require('./cleanDB');
 const story1seeds = require('./story1seeds.js');
-const story2seeds = require('./story2seeds.js');
-const story3seeds = require('./story3seeds.js');
-const story4seeds = require('./story4seeds.js');
-const story5seeds = require('./story5seeds.js');
-const story6seeds = require('./story6seeds.js');
+// const story2seeds = require('./story2seeds.js');
+// const story3seeds = require('./story3seeds.js');
+// const story4seeds = require('./story4seeds.js');
+// const story5seeds = require('./story5seeds.js');
+// const story6seeds = require('./story6seeds.js');
 // const story7seeds = require('./story7seeds.js');
 // const story8seeds = require('./story8seeds.js');
 
@@ -21,7 +21,7 @@ db.once('open', async () => {
 
         await User.create(userSeeds);
 
-        // await addStory(story1seeds.title, story1seeds.author, story1seeds.description, story1seeds.imageUrl, story1seeds.price, story1seeds.genre, story1seeds.tags, story1seeds.steps);
+        await addStory(story1seeds.title, story1seeds.author, story1seeds.description, story1seeds.imageUrl, story1seeds.price, story1seeds.genre, story1seeds.tags, story1seeds.steps);
 
         // await addStory(story2seeds.title, story2seeds.author, story2seeds.description, story2seeds.imageUrl, story2seeds.price, story2seeds.genre, story2seeds.tags, story2seeds.steps);
 

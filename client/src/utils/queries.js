@@ -6,17 +6,45 @@ export const GET_PROFILE = gql`
             _id
             username
             email
-            password
             authorInfo {
-                createdStories
+                createdStories {
+                    _id
+                    title
+                    author
+                    description
+                    imageUrl
+                    genre
+                    tags
+                    publishedDate
+                    averageRating
+                    ratingsCount
+                }
             }
             readerInfo {
-                purchasedStories
                 bookmarkedStories {
-                    storyId
-                    rating
+                    _id
+                    title
+                    author
+                    description
+                    imageUrl
+                    genre
+                    tags
+                    publishedDate
+                    averageRating
+                    ratingsCount
                 }
-                toBeReadStories
+                toBeReadStories {
+                    _id
+                    title
+                    author
+                    description
+                    imageUrl
+                    genre
+                    tags
+                    publishedDate
+                    averageRating
+                    ratingsCount
+                }
             }
         }
     }
@@ -31,7 +59,6 @@ export const GET_STORIES = gql`
             author
             description
             imageUrl
-            price
             genre
             tags
             publishedDate
@@ -50,7 +77,6 @@ export const GET_STORIES_TEST = gql`
             author
             description
             imageUrl
-            price
             genre
             tags
             publishedDate
@@ -88,7 +114,6 @@ export const GET_STORY = gql`
             author
             description
             imageUrl
-            price
             genre
             tags
             publishedDate
@@ -114,4 +139,3 @@ export const GET_STORY = gql`
         }
     }
 `;
-

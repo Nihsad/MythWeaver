@@ -4,7 +4,7 @@ const storySchema = new Schema(
     {
         title: {
             type: String,
-            required: true,
+            // required: true,
         },
         // author: {
         //     type: Schema.Types.ObjectId,
@@ -12,19 +12,14 @@ const storySchema = new Schema(
         // },
         author: {
             type: String, 
-            required: true,
+            // required: true,
         },
         description: {
             type: String,
-            required: true,
+            // required: true,
         },
         imageUrl: {
             type: String,
-        },
-        price: {
-            type: Number,
-            required: true,
-            default: 0,
         },
         genre: {
             type: String,
