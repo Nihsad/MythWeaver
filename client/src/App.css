@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Chewy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap'); /* Import the hacker font */
 
+/* General styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -45,6 +47,7 @@
   
 /* Cyberpunk theme */
 [data-theme="cyberpunk"] {
+  --theme-font: 'Share Tech Mono', monospace; /* Apply the hacker font */
   --bg-color: #000;
   --text-color: #0f0;
   --container-color: #333333;
@@ -105,4 +108,14 @@
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
+}
+
+header {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--theme-font);
+  color: var(--header-title);
 }
