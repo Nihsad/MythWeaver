@@ -1,21 +1,22 @@
 const { Schema, model } = require('mongoose');
-const { AutoIncrement } = require('../config/connection');
 const choiceSchema = require('./Choice');
 
-const stepSchema = new Schema(
+const chapterSchema = new Schema(
     {
-        // Custom ID which autoincrements starting from 1. Uses mongoose-sequence plugin.
-        stepId: {
+        chapterIndex: {
             type: Number,
-            unique: true,
+            required: true,
         },
-        stepText: {
+        title: {
             type: String,
             required: true,
         },
-        type: {
-            type: String, 
-            enum: ['continuing', 'ending'], 
+        content: {
+            type: String,
+            required: true,
+        },
+        isEnd: {
+            type: Boolean, 
             required: true,
         },
         choices: {
@@ -47,8 +48,6 @@ const stepSchema = new Schema(
     },
 );
 
-stepSchema.plugin(AutoIncrement, { inc_field: 'stepId' });
+const Chapter = model('Chapter', chapterSchema);
 
-const Step = model('Step', stepSchema);
-
-module.exports = Step;
+module.exports = Chapter;

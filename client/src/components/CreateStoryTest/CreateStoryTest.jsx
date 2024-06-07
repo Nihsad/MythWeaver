@@ -1,9 +1,14 @@
 import React from 'react';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { ADD_STORY } from '../../utils/mutations';
+import { GET_STORIES_TEST } from '../../utils/queries';
 import Auth from '../../utils/auth';
 
 function CreateStoryTest() {
+    const { loading, data } = useQuery(GET_STORIES_TEST);
+    const stories = data?.storiesTest || [];
+    console.log('The next console log will be all of your stories from GET_STORIES_TEST:');
+    console.log(stories);
 
     const [addStory, { error }] = useMutation(ADD_STORY);
 

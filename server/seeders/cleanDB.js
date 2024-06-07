@@ -1,5 +1,5 @@
 const models = require('../models');
-const { connection: db } = require('../config/connection');
+const db = require('../config/connection');
 
 module.exports = async (modelName, collectionName) => {
     try {
