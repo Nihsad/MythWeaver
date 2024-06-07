@@ -1,4 +1,4 @@
-const { User, Story, Step, Review } = require('../models');
+const { User, Story, Chapter, Review } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
 
 // Testing Server- Haleigh
@@ -18,6 +18,29 @@ const resolvers = {
             return stories;
         },
 
+        storiesTest: async () => {
+            try {
+                const stories = await Story.find()
+                    .populate({
+                        path: 'reviews',
+                        populate: {
+                            path: 'username',
+                            model: 'User',
+                        },
+                    })
+                    .populate({
+                        path: 'chapters',
+                        populate: {
+                            path: 'choices'
+                        },
+                    });
+                return stories;
+            } catch (err) {
+                console.error(err);
+                throw err;
+            }
+        },
+
         story: async (parent, { storyId }) => {
             try {
                 const story = await Story.findOne({ _id: storyId })
@@ -29,7 +52,7 @@ const resolvers = {
                         },
                     })
                     .populate({
-                        path: 'steps',
+                        path: 'chapters',
                         populate: {
                             path: 'choices'
                         },
@@ -74,11 +97,17 @@ const resolvers = {
 
                 console.log(input);
 
-                const stepIds = [];
+                const chapterObjectIds = [];
+                const chaptersWithIndex = input.chapters.map((chapter, index) => ({
+                    ...chapter,
+                    chapterIndex: index // Adding the index of the chapter as chapterIndex
+                }));
 
-                for (const step of input.steps) {
-                    const newStep = await Step.create(step);
-                    stepIds.push(newStep._id);
+
+                // Iterate over the chapters with added index and create each chapter in the database
+                for (const chapter of chaptersWithIndex) {
+                    const newChapter = await Chapter.create(chapter);
+                    chapterObjectIds.push(newChapter._id);
                 }
 
                 const story = await Story.create({
@@ -89,7 +118,7 @@ const resolvers = {
                     price: input.price,
                     genre: input.genre, 
                     tags: input.tags,
-                    steps: stepIds
+                    chapters: chapterObjectIds
                 });
 
                 console.log('The next console log that follows is your story._id from addStory in resolvers.js.')
@@ -102,7 +131,7 @@ const resolvers = {
                 )
 
                 const createdStory = await Story.findById(story._id)
-                    .populate('steps')
+                    .populate('chapters')
                     .populate('reviews')
                     .exec();
                 

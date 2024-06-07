@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { connection: db } = require('./config/connection');
+const db = require('./config/connection');
 const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');

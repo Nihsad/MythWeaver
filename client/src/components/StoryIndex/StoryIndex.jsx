@@ -72,6 +72,10 @@ const StoryIndex = () => {
         return formattedTags;
     }
 
+    const startStripe = () => {
+        // Do something
+    }
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -102,6 +106,12 @@ const StoryIndex = () => {
                 <div className='tbr-button-container'>
                     <button className='tbr-button' onClick={handleAddToTBR}>Add to To Be Read List</button>
                 </div>
+
+                {story.price !== 0 && 
+                    <div className='purchase-button-container'>
+                        <button className='purchase-button' onClick={startStripe}>{`Pay $${story.price} for forever-access to this story`}</button>
+                    </div>
+                }
 
                 {/* should have a max character limit. 400-500? */}
                 <div className="story-description">

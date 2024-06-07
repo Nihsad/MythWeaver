@@ -37,9 +37,9 @@ const storySchema = new Schema(
             type: Date,
             default: Date.now,
         },
-        steps: [{
+        chapters: [{
             type: Schema.Types.ObjectId,
-            ref: 'Step',
+            ref: 'Chapter',
             default: [],
         }],
         reviews: [{

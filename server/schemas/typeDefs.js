@@ -22,10 +22,8 @@ const typeDefs = `
     }
 
     type ReaderInfo {
-        # used to be purchasedStories: [Story]!
         purchasedStories: [ID]
         bookmarkedStories: [bookmarkedStories]
-        # used to be toBeReadStories: [Story]!
         toBeReadStories: [ID]
     }
     
@@ -44,24 +42,25 @@ const typeDefs = `
         genre: String
         tags: [String]
         publishedDate: String
-        steps: [Step]!
+        chapters: [Chapter]!
         reviews: [Review]
         averageRating: Int
         ratingsCount: Int
     }
 
-    type Step {
+    type Chapter {
         _id: ID!
-        stepId: Int!
-        stepText: String!
-        type: String!
+        chapterIndex: Int!
+        title: String!
+        content: String!
+        isEnd: Boolean!
         choices: [Choice]
     }
 
     type Choice {
         _id: ID!
         choiceText: String!
-        nextStepId: Int!
+        nextChapterIndex: Int!
     }
 
     type Review {
@@ -81,18 +80,20 @@ const typeDefs = `
         price: Int!
         genre: String!
         tags: [String]!
-        steps: [StepInput]!
+        chapters: [ChapterInput]!
     }
 
-    input StepInput {
-        stepText: String!
-        type: String!
-        choices: [ChoiceInput]
+    input ChapterInput {
+        chapterIndex: Int!
+        title: String!
+        content: String!
+        isEnd: Boolean!
+        choices: [ChoiceInput]!
     }
 
     input ChoiceInput {
         choiceText: String!
-        nextStepId: Int!
+        nextChapterIndex: Int!
     }
 
     input ReviewInput {
@@ -106,6 +107,7 @@ const typeDefs = `
         profile: User
         stories: [Story]
         story(storyId: ID!): Story
+        storiesTest: [Story]
     }
 
     type Mutation {

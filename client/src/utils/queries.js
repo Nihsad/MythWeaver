@@ -41,6 +41,44 @@ export const GET_STORIES = gql`
     }
 `;
 
+export const GET_STORIES_TEST = gql`
+    # Test to get all data from all stories
+    query GET_STORIES_TEST {
+        storiesTest {
+            _id
+            title
+            author
+            description
+            imageUrl
+            price
+            genre
+            tags
+            publishedDate
+            chapters {
+                _id
+                chapterIndex
+                title
+                content
+                isEnd
+                choices {
+                    _id
+                    choiceText
+                    nextChapterIndex
+                }
+            }
+            reviews {
+                _id
+                username
+                rating
+                reviewText
+                createdAtFormattedDate
+            }
+            averageRating
+            ratingsCount
+        }
+    }
+`;
+
 export const GET_STORY = gql`
     # This is currently all the info for 1 story
     query GET_STORY($storyId: ID!) {
@@ -54,15 +92,16 @@ export const GET_STORY = gql`
             genre
             tags
             publishedDate
-            steps {
+            chapters {
                 _id
-                stepId
-                stepText
-                type
+                chapterIndex
+                title
+                content
+                isEnd
                 choices {
                     _id
                     choiceText
-                    nextStepId
+                    nextChapterIndex
                 }
             }
             reviews {
