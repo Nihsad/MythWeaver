@@ -1,10 +1,10 @@
-import React, { useState } from 'react'; 
-import { useNavigate } from 'react-router-dom'; 
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { ADD_STORY } from '../../utils/mutations';
-import Modal from 'react-modal'; 
-import './CreateStory.css'; 
-
+import Modal from 'react-modal';
+import './CreateStory.css';
+import Auth from '../../utils/auth';
 
 Modal.setAppElement('#root');
 
@@ -23,7 +23,6 @@ function CreateStory() {
     const [storyTitle, setStoryTitle] = useState('');
     const [storyDescription, setStoryDescription] = useState('');
     const [storyImage, setStoryImage] = useState('');
-    const [storyPrice, setStoryPrice] = useState('');
     const [storyGenre, setStoryGenre] = useState('');
     const [storyTags, setStoryTags] = useState('');
 
@@ -33,7 +32,7 @@ function CreateStory() {
     const [chapterIndexToEdit, setChapterIndexToEdit] = useState(null);
     const [currentChoiceIndex, setCurrentChoiceIndex] = useState(null);
 
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
 
     // Handlers for changing story metadata
     const handlestoryTitleChange = (event) => {
@@ -47,10 +46,6 @@ function CreateStory() {
     const handleStoryImageChange = (event) => {
         setStoryImage(URL.createObjectURL(event.target.files[0])); // Update story image with a file URL
     };
-
-    const handleStoryPriceChange = (event) => {
-        setStoryPrice(event.target.value); // Update story price
-    }
 
     const handleStoryGenreChange = (event) => {
         setStoryGenre(event.target.value); // Update story genre
@@ -83,10 +78,10 @@ function CreateStory() {
         if (currentChapter.choices.length < 3) {
             setCurrentChapter(prevState => ({
                 ...prevState,
-                choices: [...prevState.choices, { choiceText: '', nextChapterIndex: null }] 
+                choices: [...prevState.choices, { choiceText: '', nextChapterIndex: null }]
             }));
         } else {
-            alert("You can only add up to three choices."); 
+            alert("You can only add up to three choices.");
         }
     };
 
@@ -102,22 +97,21 @@ function CreateStory() {
 
     // Handler for submitting initial story details
     const handleInitialSubmit = (event) => {
-        event.preventDefault(); 
-        setIsInitialModalOpen(false); 
-        setIsChapterModalOpen(true); 
-        setHasStartedStory(true); 
+        event.preventDefault();
+        setIsInitialModalOpen(false);
+        setIsChapterModalOpen(true);
+        setHasStartedStory(true);
         // All of these console logs are successful
         console.log('Your storyTitle from inside handleInitialSubmit is: ' + storyTitle);
         console.log('Your storyDescription is ' + storyDescription);
         console.log('Your storyImage is ' + storyImage);
-        console.log('Your storyPrice is ' + storyPrice);
         console.log('Your storyGenre is ' + storyGenre);
         console.log('Your storyTags is ' + storyTags);
     };
 
     // Handler for submitting a chapter
     const handleChapterSubmit = (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
 
         // Create a new chapter object
         const newChapter = {
@@ -134,17 +128,19 @@ function CreateStory() {
             const updatedChapters = [...chapters];
             updatedChapters[chapterIndexToEdit] = newChapter; // Update existing chapter if in edit mode
             setChapters(updatedChapters);
+        } else {
+            setChapters([...chapters, newChapter]); // Add new chapter
         }
 
         // Reset current chapter and close chapter modal
-        setCurrentChapter({ title: '', content: '', isEnd: false,  choices: [{ choiceText: '', nextChapterIndex: null }] });
+        setCurrentChapter({ title: '', content: '', isEnd: false, choices: [{ choiceText: '', nextChapterIndex: null }] });
         setIsChapterModalOpen(false);
         setChapterIndexToEdit(null);
     };
 
     // Handler for submitting an choice as a new chapter
     const handleChoiceSubmit = (event) => {
-        event.preventDefault(); 
+        event.preventDefault();
 
         // Create a new chapter object
         const newChapter = {
@@ -186,7 +182,7 @@ function CreateStory() {
     // Function to edit an existing chapter
     const editChapter = (index) => {
         const chapterToEdit = chapters[index];
-   
+
         setCurrentChapter({
             title: chapterToEdit.title,
             content: chapterToEdit.content,
@@ -214,20 +210,19 @@ function CreateStory() {
             console.log('the next console log is your author');
             console.log(author);
 
-            // const storyInput = {
-            //     title,
-            //     author,
-            //     description,
-            //     imageUrl,
-            //     price,
-            //     genre,
-            //     tags,
-            //     steps
-            // }
+            const storyInput = {
+                title: storyTitle,
+                author,
+                description: storyDescription,
+                imageUrl: storyImage,
+                genre: storyGenre,
+                tags: storyTags,
+                chapters 
+            }
 
-            // const data = await addStory({
-            //     variables: { storyInput }
-            // });
+            const data = await addStory({
+                variables: { storyInput }
+            });
 
         } catch (err) {
             console.error(err);
@@ -242,9 +237,6 @@ function CreateStory() {
         console.log('the next console log will be your storyImage from inside the finalizeStory function:')
         console.log(storyImage)
 
-        console.log('the next console log will be your price from inside the finalizeStory function');
-        console.log(storyPrice);
-
         console.log('the next console log will be your storyGenre from inside the finalizeStory function:')
         console.log(storyGenre)
 
@@ -258,7 +250,7 @@ function CreateStory() {
     // Function to render chapters recursively
     const renderChapters = (chapterIndex, depth = 0) => {
         const chapter = chapters[chapterIndex];
-        if (!chapter) return null; 
+        if (!chapter) return null;
 
         const indentClass = `indent-${depth}`; // Class for indenting nested chapters
 
@@ -316,9 +308,6 @@ function CreateStory() {
 
                     <label htmlFor="storyImage">Story Image:</label>
                     <input type="file" id="storyImage" onChange={handleStoryImageChange} required />
-
-                    <label htmlFor="storyPrice">Price:</label>
-                    <input type="number" id="storyPrice" value={storyPrice} onChange={handleStoryPriceChange} required />
 
                     <label htmlFor="storyGenre">Genre:</label>
                     <input type="text" id="storyGenre" value={storyGenre} onChange={handleStoryGenreChange} required />

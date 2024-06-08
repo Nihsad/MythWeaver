@@ -12,9 +12,9 @@ const StoryReview = () => {
     const [reviews, setReviews] = useState([]);
     const [username, setUsername] = useState('');
     // const [addReview, { error }] = useMutation(ADD_REVIEW);
-    // const [addToBookmarks, { error }] = useMutation(ADD_TO_BOOKMARKS);
+    const [addToBookmarks, { error }] = useMutation(ADD_TO_BOOKMARKS);
+    const { storyId } = useParams();
 
-    // Under construction beep beep. Not sure how to get the storyId which we'll need to provide in the reviewInput variable. 
     // const handleSaveReview = async () => {
     //     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -59,6 +59,11 @@ const StoryReview = () => {
 
         try {
             const profile = await Auth.getProfile();
+            console.log('this is your profile from inside handleAddToBookmarks: ');
+            console.log(profile);
+            console.log('this is your storyId from inside handleAddToBookmarks: ');
+            console.log(storyId);
+            
             const userData = await addToBookmarks({
                 variables: { storyId }
             })
@@ -118,7 +123,7 @@ const StoryReview = () => {
                         // onClick={handleSaveReview}
                         className="save-button">Save Review</button>
                     <button className="save-button"
-                        // onClick={handleAddToBookmarks}
+                        onClick={handleAddToBookmarks}
                     >Bookmark Story</button>
                 </div>
 

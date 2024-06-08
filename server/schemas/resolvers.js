@@ -1,22 +1,46 @@
 const { User, Story, Chapter, Review } = require('../models');
 const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_51PMLWzAHauJOQVmCMzjCdQJsYgF833SAFm3Yu9pkVnU4MNlg5U05bivhr1HQQlzOLx4mr9ahdYVIssEMSXxJzGOQ00IqrU8sTo');
 
 // Testing Server- Haleigh
 const resolvers = {
     Query: {
+        // profile: async (parent, args, context) => {
+        //     if (context.user) {
+        //         return User.findOne({ _id: context.user._id });
+        //     }
+        //     throw AuthenticationError;
+        // },
         profile: async (parent, args, context) => {
             if (context.user) {
-                return User.findOne({ _id: context.user._id });
+                return User.findOne({ _id: context.user._id })
+                    .populate({
+                        path: 'authorInfo',
+                        populate: {
+                            path: 'createdStories'
+                        },
+                    })
+                    .populate({
+                        path: 'readerInfo',
+                        populate: {
+                            path: 'bookmarkedStories', 
+                            path: 'toBeReadStories'
+                        },
+                    });
             }
             throw AuthenticationError;
         },
 
         stories: async () => {
+            try {
+                const stories = await Story.find()
+                // .sort('-createdAt').limit(6);
 
-            const stories = await Story.find().sort('-createdAt').limit(6);
+                return stories;
+            } catch (err) {
+                console.error(err);
+                throw err;
+            }
 
-            return stories;
         },
 
         storiesTest: async () => {
@@ -91,7 +115,6 @@ const resolvers = {
         },
         addStory: async (parent, { input }, context) => {
             try {
-
                 if (!context.user) {
                     throw AuthenticationError;
                 }
@@ -104,6 +127,7 @@ const resolvers = {
                     chapterIndex: index // Adding the index of the chapter as chapterIndex
                 }));
 
+                console.log(chaptersWithIndex);
 
                 // Iterate over the chapters with added index and create each chapter in the database
                 for (const chapter of chaptersWithIndex) {
@@ -116,7 +140,6 @@ const resolvers = {
                     author: input.author,
                     description: input.description,
                     imageUrl: input.imageUrl,
-                    price: input.price,
                     genre: input.genre,
                     tags: input.tags,
                     chapters: chapterObjectIds
@@ -144,7 +167,16 @@ const resolvers = {
                 throw new Error('There was an error when attempting to add a new story.');
             }
         },
-
+        deleteStory: async (parent, { storyId }, context) => {
+            if (context.user) {
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { 'authorInfo.createdStories': storyId } },
+                    { new: true }
+                );
+            }
+            throw AuthenticationError;
+        },
         addToTBR: async (parent, { storyId }, context) => {
             if (!context.user) {
                 throw AuthenticationError;
@@ -157,11 +189,37 @@ const resolvers = {
                     { new: true }
                 );
 
-                return updatedUser;
+                const userToReturn = await User.findOne({ _id: context.user._id })
+                    .populate({
+                        path: 'authorInfo',
+                        populate: {
+                            path: 'createdStories'
+                        },
+                    })
+                    .populate({
+                        path: 'readerInfo',
+                        populate: {
+                            path: 'bookmarkedStories', 
+                            path: 'toBeReadStories'
+                        },
+                    });
+                
+                return userToReturn;
 
             } catch (err) {
                 throw new Error(err);
             }
+        },
+
+        removeFromTBR: async (parent, { storyId }, context) => {
+            if (context.user) {
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { 'readerInfo.toBeReadStories': storyId } },
+                    { new: true }
+                );
+            }
+            throw AuthenticationError;
         },
 
         addToBookmarks: async (parent, { storyId }, context) => {
@@ -176,11 +234,36 @@ const resolvers = {
                     { new: true }
                 );
 
-                return updatedUser;
+                const userToReturn = await User.findOne({ _id: context.user._id })
+                    .populate({
+                        path: 'authorInfo',
+                        populate: {
+                            path: 'createdStories'
+                        },
+                    })
+                    .populate({
+                        path: 'readerInfo',
+                        populate: {
+                            path: 'bookmarkedStories',
+                            path: 'toBeReadStories'
+                        },
+                    });
 
+                return userToReturn;
             } catch (err) {
                 throw new Error(err);
             }
+        },
+
+        removeFromBookmarks: async (parent, { storyId }, context) => {
+            if (context.user) {
+                return User.findOneAndUpdate(
+                    { _id: context.user._id },
+                    { $pull: { 'readerInfo.bookmarkedStories': storyId } },
+                    { new: true }
+                );
+            }
+            throw AuthenticationError;
         },
 
         addReview: async (parent, { input }, context) => {
@@ -210,3 +293,4 @@ const resolvers = {
 };
 
 module.exports = resolvers;
+

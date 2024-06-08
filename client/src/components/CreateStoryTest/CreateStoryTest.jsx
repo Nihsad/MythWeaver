@@ -29,7 +29,6 @@ function CreateStoryTest() {
             const author = profile.data.username;
             const description = `In the sprawling metropolis of Neo-City, you’re a rogue hacker caught in a web of corporate intrigue, cybernetic enhancements, and forbidden magic. Play as a crooked data-smuggler navigating a harsh criminal underworld. Be cautious of your actions and wary of whom you trust—remember, it's the choices you make that define who you are.`;
             const imageUrl = '/images/test-img-7.png';
-            const price = 0.00;
             const genre = 'Cyberpunk';
             const tags = [
                 'dystopian', 
@@ -432,7 +431,6 @@ function CreateStoryTest() {
                 author, 
                 description, 
                 imageUrl, 
-                price, 
                 genre,
                 tags, 
                 steps

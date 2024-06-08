@@ -10,7 +10,7 @@ const choiceSchema = new Schema(
         // the custom stepId of the next step
         nextChapterIndex: {
             type: Number,
-            required: true,
+            // required: true,
         },
     },
 );

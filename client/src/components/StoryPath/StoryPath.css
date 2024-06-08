@@ -51,3 +51,36 @@
 .option:hover {
     opacity: 0.8;
 }
+
+.story-end-button {
+    display: flex;
+    margin: 0 auto;
+    justify-content: center;
+    gap: 30px;
+    /* Add space between buttons */
+    flex-wrap: wrap;
+    /* Allow buttons to wrap to the next line if necessary */
+    max-width: 60vw;
+}
+
+.bookmark {
+    background-color: var(--header-text);
+    border: none;
+    border-radius: 20px;
+    color: var(--header-link-hover);
+    padding: 10px 20px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all ease-in-out 0.3s;
+}
+
+.bookmark:hover {
+    opacity: 0.8;
+    background-color: var(--header-title);
+}
+
+.bookmark a,
+.bookmark a:hover {
+    color: var(--header-link-hover);
+    text-decoration: none;
+}

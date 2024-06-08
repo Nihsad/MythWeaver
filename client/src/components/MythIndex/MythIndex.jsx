@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useQuery } from '@apollo/client';
 import { GET_STORIES } from '../../utils/queries';
 import { Link } from 'react-router-dom';
-
 import './MythIndex.css';
 
 const MythIndex = () => {
