@@ -1,5 +1,3 @@
-// this is the hover effect specifically for the cyberpunk theme.
-
 export function typingEffect(element, text) {
     let index = 0;
     element.innerHTML = '';

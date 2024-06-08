@@ -18,22 +18,13 @@ const Header = () => {
   const handleThemeChange = (newTheme) => {
     setTheme(newTheme);
     document.documentElement.setAttribute('data-theme', newTheme);
-  };
-
-  useEffect(() => {
-    const titleElement = document.querySelector('.title a');
-    const originalText = titleElement.textContent;
-
-    const handleMouseEnter = () => {
+    
+    if (newTheme === 'cyberpunk') {
+      const titleElement = document.querySelector('.title a');
+      const originalText = titleElement.textContent;
       typingEffect(titleElement, originalText);
-    };
-
-    titleElement.addEventListener('mouseenter', handleMouseEnter);
-
-    return () => {
-      titleElement.removeEventListener('mouseenter', handleMouseEnter);
-    };
-  }, []);
+    }
+  };
 
   return (
     <>
