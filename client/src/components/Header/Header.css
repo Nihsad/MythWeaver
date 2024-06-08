@@ -1,58 +1,59 @@
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    background-color: var(--header-bg);
-    border-bottom: 1px solid var(--header-link-hover);
-  }
-  
-  .header-left,
-  .header-right {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .header-button {
-    background-color: var(--header-bg);
-    color: var(--header-text);
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: all ease-in-out 0.5s;
-  }
-  
-  .header-button:hover {
-    background-color: var(--header-link-hover);
-    border-radius: 10px;
-  }
-  
-  .header-link {
-    text-decoration: none;
-  }
-  
-  .title {
-    font-size: 3rem;
-    margin: 0;
-    text-align: center;
-    flex-grow: 1;
-  }
-  
-  .title a {
-    color: var(--header-title);
-    text-decoration: none;
-    transition: all ease-in-out 0.5s;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: var(--header-bg);
+  border-bottom: 1px solid var(--header-link-hover);
+}
 
-  .title a:hover {
-    text-shadow: 1px 1px 4px var(--header-shadow);
-  }
+.header-left,
+.header-right {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-  /* Dropdown Styling */
+.header-button {
+  background-color: var(--header-bg);
+  color: var(--header-text);
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all ease-in-out 0.5s;
+}
+
+.header-button:hover {
+  background-color: var(--header-link-hover);
+  border-radius: 10px;
+}
+
+.header-link {
+  text-decoration: none;
+}
+
+.title {
+  font-size: 3rem;
+  margin: 0;
+  text-align: center;
+  flex-grow: 1;
+  font-family: var(--theme-font); /* Apply the theme font */
+}
+
+.title a {
+  color: var(--header-title);
+  text-decoration: none;
+  transition: all ease-in-out 0.5s;
+}
+
+.title a:hover {
+  text-shadow: 1px 1px 4px var(--header-shadow);
+}
+
+/* Dropdown Styling */
 
 .dropdown-container {
   display: flex;
@@ -123,7 +124,6 @@
 /* .dropdown-content {
   display: ${dropdownOpen ? 'block' : 'none'};
 } */
-
 
 /* MythIndex.css and Header.css */
 
